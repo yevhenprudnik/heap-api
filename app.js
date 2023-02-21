@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default async function (fastify, opts) {
+export default async (fastify, opts) => {
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'plugins'),
   });

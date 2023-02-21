@@ -1,5 +1,5 @@
 import * as Handlers from './example.handlers.js';
-import * as Schemas from './example.schemas.js';
+import * as Schemas from "./example.schemas.js";
 
 export default async (fastify, opts) => {
   fastify.get('/', async (request, reply) => Handlers.getHandler());

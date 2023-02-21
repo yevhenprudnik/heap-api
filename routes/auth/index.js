@@ -1,5 +1,5 @@
+import * as Handlers from './auth.handler.js'
+
 export default async (fastify, opts) => {
-  fastify.get('/', async (request, reply) => {
-    return { auth: true };
-  });
+  fastify.post('/', async (request, reply) => Handlers.auth(request.body));
 };
