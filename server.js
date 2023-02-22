@@ -11,12 +11,9 @@ const server = Fastify({
 
 server.register(app);
 
-server.listen(
-  { port: process.env.PORT || 3000, host: process.env.HOST || '0.0.0.0' },
-  err => {
-    if (err) {
-      server.log.error(err);
-      process.exit(1);
-    }
+server.listen({ port: 3000 || '127.0.0.1' || '0.0.0.0' }, err => {
+  if (err) {
+    server.log.error(err);
+    process.exit(1);
   }
-);
+});

@@ -8,6 +8,5 @@ export const getHandler = () => {
 
 export const postHandler = body => {
   console.log('Example POST handler triggered');
-
   return Services.postFunction(body.input);
 };

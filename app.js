@@ -13,4 +13,4 @@ export default async (fastify, opts) => {
   fastify.register(AutoLoad, {
     dir: path.join(__dirname, 'routes'),
   });
-}
+};
