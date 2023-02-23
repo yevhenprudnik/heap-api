@@ -3,6 +3,7 @@
 import {} from 'dotenv/config';
 import Fastify from 'fastify';
 import app from './app.js';
+import { PORT, HOST } from './environment.js';
 
 const server = Fastify({
   logger: false,
@@ -11,7 +12,7 @@ const server = Fastify({
 
 server.register(app);
 
-server.listen({ port: 3000 || '127.0.0.1' || '0.0.0.0' }, err => {
+server.listen({ port: PORT, host: HOST }, err => {
   if (err) {
     server.log.error(err);
     process.exit(1);

@@ -1,10 +1,8 @@
-import * as env from 'dotenv';
-env.config({ path: '../.env' });
+import { DB_CONNECTION } from '../environment.js';
 
 export default {
   development: {
     client: 'pg',
-    connection:
-      process.env.DB_CONNECTION
+    connection: DB_CONNECTION,
   },
 };

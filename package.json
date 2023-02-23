@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "fastify start app.js",
-    "dev": "fastify start -w -P app.js"
+    "dev": "fastify start -w -P app.js",
+    "migrate:up": "npx knex migrate:latest --knexfile db/knexfile.js",
+    "migrate:down": "npx knex migrate:latest --knexfile db/knexfile.js"
   },
   "keywords": [],
   "author": "",
