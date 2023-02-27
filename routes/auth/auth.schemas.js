@@ -15,11 +15,11 @@ export const login = {
       required: ['email', 'password'],
       properties: user,
     },
-  },
-  response: {
-    '2xx': {
-      type: 'object',
-      properties: user,
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: user,
+      },
     },
   },
 };
