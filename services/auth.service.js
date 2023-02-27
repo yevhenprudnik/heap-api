@@ -1,5 +1,17 @@
-export const auth = (email, password) => {
-  console.log('Auth service triggered');
+import { EntityService } from './entity.service.js';
 
-  return { email, password };
-};
+export class AuthService {
+  constructor(db) {
+    this.service = new EntityService(db, 'user');
+  }
+
+  async logIn(email, password) {
+    const user = await this.service.getOne({ email, password });
+
+    if (!user) {
+      throw new Error('Wrong credentials');
+    }
+
+    return user;
+  }
+}
