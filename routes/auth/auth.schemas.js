@@ -2,7 +2,7 @@ const user = {
   email: {
     type: 'string',
   },
-  password: {
+  username: {
     type: 'string',
   },
 };
@@ -15,11 +15,27 @@ export const login = {
       required: ['email', 'password'],
       properties: user,
     },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: user,
+      },
+    },
   },
-  response: {
-    '2xx': {
+};
+export const register = {
+  schema: {
+    description: 'Creating a user, if the user already exists, throws an error',
+    body: {
       type: 'object',
+      required: ['email', 'password', 'username'],
       properties: user,
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: user,
+      },
     },
   },
 };

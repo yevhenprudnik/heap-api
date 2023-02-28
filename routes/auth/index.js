@@ -11,4 +11,12 @@ export default async (fastify, opts) => {
 
     return user;
   });
+
+  fastify.post('/register', Schemas.register, async (request, reply) => {
+    const { email, password, username } = request.body;
+
+    const user = await service.register(email, password, username);
+
+    return user;
+  });
 };
