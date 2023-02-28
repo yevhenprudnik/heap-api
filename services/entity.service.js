@@ -9,7 +9,7 @@ export class EntityService {
   }
 
   async create(payload) {
-    return this.alias.insert(payload);
+    return this.db(this.alias).insert(payload);
   }
 
   async getOneConditional(filter) {
@@ -26,7 +26,7 @@ export class EntityService {
   }
 
   async delete(id) {
-    return this.db(this.alias).del().where({id});
+    return this.db(this.alias).del().where({ id });
   }
 
   async update(id, payload) {
