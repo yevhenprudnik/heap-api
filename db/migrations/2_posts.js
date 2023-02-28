@@ -3,6 +3,7 @@ export const up = knex => {
     table.increments('id');
     table.string('content').notNullable();
     table.integer('authorId').references('user.id').notNullable();
+    table.timestamps(true, true);
   });
 };
 

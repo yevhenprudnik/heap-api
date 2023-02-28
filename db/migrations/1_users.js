@@ -3,8 +3,8 @@ export const up = knex => {
     table.increments();
     table.string('email', 255).notNullable().unique();
     table.string('username', 50).notNullable();
-    table.string('password', 50).notNullable();
-    table.timestamp(true, true);
+    table.string('password', 255).notNullable();
+    table.timestamps(true, true);
   });
 };
 
