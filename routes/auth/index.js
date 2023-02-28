@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service.js';
 export default async (fastify, opts) => {
   const service = new AuthService(fastify.knex);
 
-  fastify.post('/', Schemas.login, async (request, reply) => {
+  fastify.post('/login', Schemas.login, async (request, reply) => {
     const { email, password } = request.body;
 
     const user = await service.logIn(email, password);
