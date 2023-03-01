@@ -18,6 +18,7 @@ export class EntityService {
     for (const key in filter) {
       query.orWhere(key, filter[key]);
     }
+    
     return query.first();
   }
 
@@ -25,8 +26,9 @@ export class EntityService {
     return this.db(this.alias).where(filter);
   }
 
-  async delete(id) {
-    return this.db(this.alias).del().where({ id });
+  async deleteById(id) {
+    const result = this.db(this.alias).del().where({ id });
+    return result > 0;
   }
 
   async update(id, payload) {
