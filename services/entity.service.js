@@ -28,6 +28,7 @@ export class EntityService {
 
   async deleteById(id) {
     const result = this.db(this.alias).del().where({ id });
+    
     return result > 0;
   }
 

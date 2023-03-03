@@ -2,7 +2,7 @@ import { EntityService } from './entity.service.js';
 
 export class PostService {
   constructor(db) {
-    this.service = new EntityService(db, 'posts');
+    this.service = new EntityService(db, 'post');
   }
 
   async createPost(content, authorId) {
