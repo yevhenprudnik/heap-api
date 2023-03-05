@@ -1,7 +1,14 @@
-const user = {
+const logInUser = {
   email: {
     type: 'string',
   },
+  username: {
+    type: 'string',
+  },
+};
+
+const registerUser = {
+  ...logInUser,
   username: {
     type: 'string',
   },
@@ -13,7 +20,13 @@ export const login = {
     body: {
       type: 'object',
       required: ['email', 'password'],
-      properties: user,
+      properties: logInUser,
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: logInUser,
+      },
     },
     response: {
       '2xx': {
@@ -23,13 +36,20 @@ export const login = {
     },
   },
 };
+
 export const register = {
   schema: {
-    description: 'Creating a user, if the user already exists, throws an error',
+    description: 'Returns user or throws an error for already used credentials',
     body: {
       type: 'object',
       required: ['email', 'password', 'username'],
-      properties: user,
+      properties: registerUser,
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: registerUser,
+      },
     },
     response: {
       '2xx': {
