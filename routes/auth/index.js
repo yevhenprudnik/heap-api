@@ -7,16 +7,12 @@ export default async (fastify, opts) => {
   fastify.post('/login', Schemas.login, async (request, reply) => {
     const { email, password } = request.body;
 
-    const user = await service.logIn(email, password);
-
-    return user;
+    return service.logIn(email, password);
   });
 
   fastify.post('/register', Schemas.register, async (request, reply) => {
     const { email, password, username } = request.body;
 
-    const user = await service.register(email, password, username);
-
-    return user;
+    return service.register(email, password, username);
   });
 };

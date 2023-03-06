@@ -24,20 +24,18 @@ export class AuthService {
   async register(email, password, username) {
     const user = await this.service.getOneConditional({ email, username });
 
-    if (user) {
-      if (user.email !== email && user.username === username) {
-        throw new Error(
-          `The user with username ${username} is already registered`
-        );
-      } else {
-        throw new Error(`User with email ${email} is already registered`);
-      }
+    if (user?.name === name) {
+      throw new Error(
+        `The user with username ${username} is already registered`
+      );
+    }
+
+    if (user?.email === email) {
+      throw new Error(`User with email ${email} is already registered`);
     }
 
     const hashPassword = await bcrypt.hash(password, 3);
 
-    this.service.create({ email, password: hashPassword, username });
-
-    return this.service.getOneConditional({ email });
+    return this.service.create({ email, password: hashPassword, username });
   }
 }
