@@ -1,8 +1,17 @@
-const logInUser = {
+const user = {
   email: {
     type: 'string',
   },
   password: {
+    type: 'string',
+  },
+};
+
+const logInUser = {
+  email: {
+    type: 'string',
+  },
+  username: {
     type: 'string',
   },
 };
@@ -28,6 +37,12 @@ export const login = {
         properties: logInUser,
       },
     },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: logInUser,
+      },
+    },
   },
 };
 
@@ -38,6 +53,12 @@ export const register = {
       type: 'object',
       required: ['email', 'password', 'username'],
       properties: registerUser,
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: registerUser,
+      },
     },
     response: {
       '2xx': {
