@@ -1,3 +1,12 @@
+const user = {
+  email: {
+    type: 'string',
+  },
+  password: {
+    type: 'string',
+  },
+};
+
 const logInUser = {
   email: {
     type: 'string',
@@ -31,7 +40,7 @@ export const login = {
     response: {
       '2xx': {
         type: 'object',
-        properties: user,
+        properties: logInUser,
       },
     },
   },
@@ -54,7 +63,7 @@ export const register = {
     response: {
       '2xx': {
         type: 'object',
-        properties: user,
+        properties: registerUser,
       },
     },
   },

@@ -24,7 +24,7 @@ export class AuthService {
   async register(email, password, username) {
     const user = await this.service.getOneConditional({ email, username });
 
-    if (user?.name === name) {
+    if (user?.username === username) {
       throw new Error(
         `The user with username ${username} is already registered`
       );
