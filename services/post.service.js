@@ -6,11 +6,13 @@ export class PostService {
   }
 
   async createPost(content, authorId) {
-    return this.service.create({ content, authorId });
+    const id = await this.service.create({ content, authorId });
+
+    return { id, content, authorId };
   }
 
   async getPost(id) {
-    return this.service.getOne(postId);
+    return this.service.getOne(id);
   }
 
   async deletePost(id) {
@@ -19,5 +21,13 @@ export class PostService {
 
   async updatePost(id, updatedPost) {
     return this.service.update(id, updatedPost);
+  }
+
+  async getPostByAuthorId(authorId) {
+    return this.service.join(
+      ['post.authorId', authorId],
+      ['user', 'user.id', 'post.authorId'],
+      ['user.username', 'post.content']
+    );
   }
 }

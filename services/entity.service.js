@@ -9,7 +9,7 @@ export class EntityService {
   }
 
   async create(payload) {
-    return this.db(this.alias).insert(payload);
+    return this.db(this.alias).insert(payload).returning('id');
   }
 
   async getOneConditional(filter) {
@@ -18,7 +18,7 @@ export class EntityService {
     for (const key in filter) {
       query.orWhere(key, filter[key]);
     }
-    
+
     return query.first();
   }
 
@@ -27,12 +27,19 @@ export class EntityService {
   }
 
   async deleteById(id) {
-    const result = this.db(this.alias).del().where({ id });
-    
+    const result = await this.db(this.alias).where({ id }).del();
+
     return result > 0;
   }
 
   async update(id, payload) {
     return this.db(this.alias).where({ id }).update(payload);
+  }
+
+  async join(filter, joinParameters, selectParameters) {
+    return this.db(this.alias)
+      .select(...selectParameters)
+      .where(...filter)
+      .innerJoin(...joinParameters);
   }
 }
