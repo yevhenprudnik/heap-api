@@ -4,7 +4,7 @@ export class TokenService {
   }
 
   generateToken(payload) {
-    const acsessToken = this.jwtAuth.jwt.sign(payload, this.jwtAuth.accessKey, {
+    const accessToken = this.jwtAuth.jwt.sign(payload, this.jwtAuth.accessKey, {
       expiresIn: '30m',
     });
 
@@ -16,10 +16,10 @@ export class TokenService {
       }
     );
 
-    return { acsessToken, refreshToken };
+    return { accessToken, refreshToken };
   }
 
-  validateAcsessToken(token) {
+  validateAccessToken(token) {
     try {
       return this.jwtAuth.jwt.verify(token, this.jwtAuth.accessKey);
     } catch (error) {
