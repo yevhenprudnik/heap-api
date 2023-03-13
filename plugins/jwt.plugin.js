@@ -11,6 +11,6 @@ export default fp(async (fastify, opts) => {
       refreshKey: SECRET_KEY_REFRESH,
       accessKey: SECRET_KEY_ACCESS,
     });
-    console.log('jwt-plugin ');
+    console.log('JWT-plugin registered');
   }
 });
