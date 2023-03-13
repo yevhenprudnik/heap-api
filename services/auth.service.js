@@ -28,7 +28,7 @@ export class AuthService {
       username,
     });
 
-    const tokens = this.tokenService.generateToken({ email, username });
+    const tokens = this.tokenService.generateTokens({ email, username });
 
     return { ...tokens, user };
   }
@@ -46,7 +46,7 @@ export class AuthService {
       throw new Error(`Wrong credentials`);
     }
 
-    const tokens = this.tokenService.generateToken({
+    const tokens = this.tokenService.generateTokens({
       email: user.email,
       username: user.username,
     });

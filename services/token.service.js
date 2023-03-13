@@ -3,7 +3,7 @@ export class TokenService {
     this.jwtAuth = jwtAuth;
   }
 
-  generateToken(payload) {
+  generateTokens(payload) {
     const accessToken = this.jwtAuth.jwt.sign(payload, this.jwtAuth.accessKey, {
       expiresIn: '30m',
     });
