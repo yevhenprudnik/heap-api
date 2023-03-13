@@ -1,23 +1,27 @@
-import { SECRET_KEY_ACCESS, SECRET_KEY_REFRESH } from '../environment.js';
-
 export class TokenService {
-  constructor(jwt) {
-    this.jwt = jwt;
+  constructor(jwtAuth) {
+    this.jwtAuth = jwtAuth;
   }
 
   generateToken(payload) {
-    const acsessToken = this.jwt.sign(payload, SECRET_KEY_ACCESS, {
+    const acsessToken = this.jwtAuth.jwt.sign(payload, this.jwtAuth.accessKey, {
       expiresIn: '30m',
     });
-    const refreshToken = this.jwt.sign(payload, SECRET_KEY_REFRESH, {
-      expiresIn: '30',
-    });
+
+    const refreshToken = this.jwtAuth.jwt.sign(
+      payload,
+      this.jwtAuth.refreshKey,
+      {
+        expiresIn: '30d',
+      }
+    );
+
     return { acsessToken, refreshToken };
   }
 
   validateAcsessToken(token) {
     try {
-      return this.jwt.verify(token, JWT_ACCESS_SECRET_KEY);
+      return this.jwtAuth.jwt.verify(token, this.jwtAuth.accessKey);
     } catch (error) {
       return null;
     }
@@ -25,7 +29,7 @@ export class TokenService {
 
   validateRefreshToken(token) {
     try {
-      return this.jwt.verify(token, JWT_REFRESH_SECRET_KEY);
+      return this.jwtAuth.jwt.verify(token, this.jwtAuth.refreshKey);
     } catch (error) {
       return null;
     }

@@ -2,9 +2,9 @@ import { EntityService } from './entity.service.js';
 import { TokenService } from './token.service.js';
 import bcrypt from 'bcrypt';
 export class AuthService {
-  constructor(db, jwt) {
+  constructor(db, jwtAuth) {
     this.service = new EntityService(db, 'user');
-    this.tokenService = new TokenService(jwt);
+    this.tokenService = new TokenService(jwtAuth);
   }
 
   async logIn(email, password) {
@@ -25,7 +25,7 @@ export class AuthService {
       username: user.username,
     });
 
-    return { ...tokens, user };
+    return { ...tokens, ...user };
   }
 
   async register(email, password, username) {
@@ -49,6 +49,6 @@ export class AuthService {
     });
     const tokens = this.tokenService.generateToken({ email, username });
 
-    return { ...tokens, user };
+    return { ...tokens, ...user };
   }
 }

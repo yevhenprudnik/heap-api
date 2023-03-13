@@ -14,6 +14,12 @@ const logInUser = {
   username: {
     type: 'string',
   },
+  acsessToken: {
+    type: 'string',
+  },
+  refreshToken: {
+    type: 'string',
+  },
 };
 
 const registerUser = {
