@@ -10,7 +10,7 @@ export class PostService {
   }
 
   async getPost(id) {
-    return this.service.getOne(postId);
+    return this.service.getOne(id);
   }
 
   async deletePost(id) {
