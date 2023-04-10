@@ -6,8 +6,9 @@ import jwt from 'jsonwebtoken';
 
 export default fp(async (fastify, opts) => {
   if (!fastify.jwt) {
-    fastify.decorate('jwtAuth', {
-      jwt,
+    fastify.decorate('jwt', {
+      sign: (token, key) => jwt.sign(token, key),
+      verify: (token, key) => jwt.verify(token, key),
       refreshKey: SECRET_KEY_REFRESH,
       accessKey: SECRET_KEY_ACCESS,
     });

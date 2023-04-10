@@ -2,9 +2,9 @@ import { EntityService } from './entity.service.js';
 import { TokenService } from './token.service.js';
 import bcrypt from 'bcrypt';
 export class AuthService {
-  constructor(db, jwtAuth) {
+  constructor(db, jwt) {
     this.service = new EntityService(db, 'user');
-    this.tokenService = new TokenService(jwtAuth);
+    this.tokenService = new TokenService(jwt);
   }
 
   async register(email, password, username) {
