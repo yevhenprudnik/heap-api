@@ -1,38 +1,21 @@
 export class EntityService {
-  constructor(db, alias) {
-    this.db = db;
-    this.alias = alias;
+  constructor(model) {
+    this.model = model;
   }
 
   async getOne(filter) {
-    return this.db(this.alias).where(filter).first();
+    return this.model.query().where(filter);
   }
 
   async create(payload) {
-    return this.db(this.alias).insert(payload);
-  }
-
-  async getOneConditional(filter) {
-    const query = this.db(this.alias);
-
-    for (const key in filter) {
-      query.orWhere(key, filter[key]);
-    }
-    
-    return query.first();
-  }
-
-  async getMany(filter) {
-    return this.db(this.alias).where(filter);
+    return this.model.query().insert(payload);
   }
 
   async deleteById(id) {
-    const result = this.db(this.alias).del().where({ id });
-    
-    return result > 0;
+    return this.model.query().deleteById(id);
   }
 
   async update(id, payload) {
-    return this.db(this.alias).where({ id }).update(payload);
+    return this.model.query().patchAndFetchById(id, payload);
   }
 }
