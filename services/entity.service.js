@@ -7,6 +7,10 @@ export class EntityService {
     return this.model.query().where(filter);
   }
 
+  async search(filter) {
+    return this.model.query().where(filter);
+  }
+
   async create(payload) {
     return this.model.query().insert(payload);
   }
