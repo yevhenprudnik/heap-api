@@ -6,32 +6,31 @@ export class ValidateTokens {
     this.service = new EntityService(db, 'user');
     this.tokenService = new TokenService(jwt);
 
-    this.validateRefresh = this.validateRefresh.bind(this);
+    this.validateAccess = this.validateAccess.bind(this);
   }
 
-  async validateRefresh(request, reply) {
+  async validateAccess(request, reply) {
+    const token = request.headers.authorization;
     try {
-      const token = request.cookies.RefreshToken;
-
       if (!token) {
-        return 'Token not found';
+        throw new Error('Token not found');
       }
 
-      const result = this.tokenService.validateRefreshToken(token);
+      const result = this.tokenService.validateAccessToken(token);
 
       if (!result) {
-        return 'Token is not valid';
+        throw new Error('Token is not valid');
       }
 
-      const user = await this.service.getOne({ email: result.email });
+      const user = await this.service.getOne({ id: result.id });
 
       if (!user) {
-        return 'User not found';
+        throw new Error('User not found');
       }
 
       request.user = user;
     } catch (err) {
-      return 'err';
+      throw new Error(err);
     }
   }
 }

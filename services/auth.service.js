@@ -28,14 +28,17 @@ export class AuthService {
       username,
     });
 
-    const tokens = this.tokenService.generateTokens({ email, username });
+    const tokens = this.tokenService.generateTokens({
+      email,
+      username,
+      id: user.id,
+    });
 
     return { ...tokens, user };
   }
 
   async logIn(email, password) {
     const user = await this.service.getOne({ email });
-
     if (!user) {
       throw new Error('Wrong credentials');
     }
@@ -49,6 +52,7 @@ export class AuthService {
     const tokens = this.tokenService.generateTokens({
       email: user.email,
       username: user.username,
+      id: user.id,
     });
 
     return { ...tokens, user };
