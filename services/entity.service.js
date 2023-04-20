@@ -3,23 +3,33 @@ export class EntityService {
     this.model = model;
   }
 
-  async getOne(filter) {
-    return this.model.query().where(filter);
+  get queryBuilder() {
+    return this.model.query();
   }
 
-  async search(filter) {
-    return this.model.query().where(filter);
+  async getOne(filter) {
+    return this.queryBuilder.where(filter);
+  }
+
+  async search(filter, relations) {
+    const query = this.queryBuilder;
+
+    relations.forEach(relation => query.withGraphFetched(relation));
+
+    query.where(filter);
+
+    return query;
   }
 
   async create(payload) {
-    return this.model.query().insert(payload);
+    return this.queryBuilder.insert(payload);
   }
 
   async deleteById(id) {
-    return this.model.query().deleteById(id);
+    return this.queryBuilder.deleteById(id);
   }
 
   async update(id, payload) {
-    return this.model.query().patchAndFetchById(id, payload);
+    return this.queryBuilder.patchAndFetchById(id, payload);
   }
 }

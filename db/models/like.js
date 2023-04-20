@@ -1,10 +1,10 @@
 import { Model } from 'objection';
 import { User } from './user.js';
-import { Like } from './like.js';
+import { Post } from './post.js';
 
-export class Post extends Model {
+export class Like extends Model {
   static get tableName() {
-    return 'post';
+    return 'like';
   }
 
   static get relationMappings() {
@@ -13,17 +13,17 @@ export class Post extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'post.authorId',
+          from: 'like.authorId',
           to: 'user.id',
         },
       },
 
-      likes: {
-        relation: Model.HasManyRelation,
-        modelClass: Like,
+      post: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Post,
         join: {
-          from: 'post.id',
-          to: 'like.postId',
+          from: 'like.postId',
+          to: 'post.id',
         },
       },
     };
