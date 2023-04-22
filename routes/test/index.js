@@ -15,14 +15,7 @@ export default async (fastify, opts) => {
     return postService.search({}, ['user', 'likes']);
   });
 
-  fastify.get('/user-posts-v1', async (request, reply) => {
-    // hardcode, just for testing:
-    const userId = 2;
-
-    return postService.getPostsByUserId(userId);
-  });
-
-  fastify.get('/user-posts-v2', async (request, reply) => {
+  fastify.get('/user-posts', async (request, reply) => {
     // hardcode, just for testing:
     const userId = 2;
 
@@ -30,7 +23,7 @@ export default async (fastify, opts) => {
       {
         authorId: userId,
       },
-      ['user']
+      ['user', 'likes']
     );
   });
 

@@ -12,8 +12,11 @@ export default fp(async fastify => {
       useNullAsDefault: true,
       connection: DB_CONNECTION,
     });
+
     fastify.decorate('knex', Knex);
   }
+
   Model.knex(fastify.knex);
+
   console.log('Connected to database');
 });

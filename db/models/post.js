@@ -7,6 +7,14 @@ export class Post extends Model {
     return 'post';
   }
 
+  // static query(...args) {
+  //   return super.query(...args).onBuildKnex(knexQueryBuilder => {
+  //     knexQueryBuilder.on('query', queryData => {
+  //       console.log(queryData);
+  //     });
+  //   });
+  // }
+
   static get relationMappings() {
     return {
       user: {
