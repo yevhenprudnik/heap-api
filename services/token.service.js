@@ -1,37 +1,55 @@
 export class TokenService {
-  constructor(jwtAuth) {
-    this.jwtAuth = jwtAuth;
+  constructor(jwt) {
+    this.jwt = jwt;
   }
 
   generateTokens(payload) {
-    const accessToken = this.jwtAuth.jwt.sign(payload, this.jwtAuth.accessKey, {
-      expiresIn: '30m',
-    });
+    return {
+      accessToken: this.generateAccessToken(payload),
+      refreshToken: this.generateRefreshToken(payload),
+    };
+  }
 
-    const refreshToken = this.jwtAuth.jwt.sign(
-      payload,
-      this.jwtAuth.refreshKey,
+  generateAccessToken(payload) {
+    return this.jwt.sign(
+      { type: 'access', ...payload },
+      {
+        expiresIn: '30m',
+      }
+    );
+  }
+
+  generateRefreshToken(payload) {
+    return this.jwt.sign(
+      { type: 'refresh', ...payload },
       {
         expiresIn: '30d',
       }
     );
-
-    return { accessToken, refreshToken };
   }
 
-  validateAccessToken(token) {
-    try {
-      return this.jwtAuth.jwt.verify(token, this.jwtAuth.accessKey);
-    } catch (error) {
-      return null;
+  validateTokens(types, tokens) {
+    let accessTokenPayload;
+    let refreshTokenPayload;
+
+    if (types.includes('access')) {
+      accessTokenPayload = this.validateToken(tokens.accessToken, 'access');
     }
+
+    if (types.includes('refresh')) {
+      refreshTokenPayload = this.validateToken(tokens.refreshToken, 'refresh');
+    }
+
+    return { ...accessTokenPayload, ...refreshTokenPayload };
   }
 
-  validateRefreshToken(token) {
-    try {
-      return this.jwtAuth.jwt.verify(token, this.jwtAuth.refreshKey);
-    } catch (error) {
-      return null;
+  validateToken(token, type) {
+    const result = this.jwt.verify(token);
+
+    if (result.type !== type) {
+      throw new Error();
     }
+
+    return result;
   }
 }
