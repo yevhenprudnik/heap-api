@@ -7,5 +7,4 @@ export const PORT = process.env.PORT;
 /* DATABASE INFORMATION */
 export const DB_CONNECTION = process.env.DB_CONNECTION;
 /* Access and Refresh Key */
-export const SECRET_KEY_ACCESS = process.env.SECRET_KEY_ACCESS;
-export const SECRET_KEY_REFRESH = process.env.SECRET_KEY_REFRESH;
+export const JWT_SECRET = process.env.JWT_SECRET;

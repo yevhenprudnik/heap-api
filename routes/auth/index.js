@@ -1,18 +1,34 @@
 import * as Schemas from './auth.schemas.js';
 import { AuthService } from '../../services/auth.service.js';
 
-export default async (fastify, opts) => {
-  const service = new AuthService(fastify.knex, fastify.jwtAuth);
+export default async fastify => {
+  const service = new AuthService(fastify.jwt);
 
-  fastify.post('/register', Schemas.register, async (request, reply) => {
-    const { email, password, username } = request.body;
+  fastify.get(
+    '/',
+    { preHandler: fastify.useAccessAuth },
+    async (request, reply) => {
+      return request.user;
+    }
+  );
 
-    return service.register(email, password, username);
+  fastify.post('/sign-up', Schemas.register, async (request, reply) => {
+    const { body } = request;
+
+    return service.signUp(body);
   });
 
-  fastify.post('/logIn', Schemas.login, async (request, reply) => {
-    const { email, password } = request.body;
+  fastify.post('/sign-in', Schemas.login, async (request, reply) => {
+    const { body } = request;
 
-    return service.logIn(email, password);
+    return service.signIn(body);
   });
+
+  fastify.get(
+    '/refresh',
+    { preHandler: fastify.useRefreshAuth },
+    async (request, reply) => {
+      return service.refresh(request.user);
+    }
+  );
 };

@@ -1,14 +1,18 @@
-import { EntityService } from './entity.service.js';
-import { TokenService } from './token.service.js';
 import bcrypt from 'bcrypt';
+import { UserService } from './user.service.js';
+import { TokenService } from './token.service.js';
 export class AuthService {
-  constructor(db, jwtAuth) {
-    this.service = new EntityService(db, 'user');
-    this.tokenService = new TokenService(jwtAuth);
+  constructor(jwt) {
+    this.userService = new UserService();
+    this.tokenService = new TokenService(jwt);
   }
 
-  async register(email, password, username) {
-    const candidate = await this.service.getOneConditional({ email, username });
+  async signUp(definition) {
+    const { email, password, username } = definition;
+
+    const candidate = await this.userService.getOne(builder =>
+      builder.where({ email }).orWhere({ username })
+    );
 
     if (candidate?.username === username) {
       throw new Error(
@@ -22,19 +26,19 @@ export class AuthService {
 
     const hashPassword = await bcrypt.hash(password, 3);
 
-    const user = await this.service.create({
+    const user = await this.userService.create({
       email,
       password: hashPassword,
       username,
     });
 
-    const tokens = this.tokenService.generateTokens({ email, username });
-
-    return { ...tokens, user };
+    return this.tokenService.generateTokens({ id: user.id });
   }
 
-  async logIn(email, password) {
-    const user = await this.service.getOne({ email });
+  async signIn(definition) {
+    const { email, password } = definition;
+
+    const user = await this.userService.getOne({ email });
 
     if (!user) {
       throw new Error('Wrong credentials');
@@ -46,11 +50,10 @@ export class AuthService {
       throw new Error(`Wrong credentials`);
     }
 
-    const tokens = this.tokenService.generateTokens({
-      email: user.email,
-      username: user.username,
-    });
+    return this.tokenService.generateTokens({ id: user.id });
+  }
 
-    return { ...tokens, user };
+  async refresh(user) {
+    return this.tokenService.generateTokens({ id: user.id });
   }
 }

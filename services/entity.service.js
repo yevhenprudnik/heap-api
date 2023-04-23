@@ -8,7 +8,7 @@ export class EntityService {
   }
 
   async getOne(filter) {
-    return this.queryBuilder.where(filter);
+    return this.queryBuilder.findOne(filter);
   }
 
   async search(filter, relations) {

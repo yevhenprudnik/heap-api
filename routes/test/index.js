@@ -2,7 +2,7 @@ import { UserService } from '../../services/user.service.js';
 import { PostService } from '../../services/post.service.js';
 import { LikeService } from '../../services/like.service.js';
 
-export default async (fastify, opts) => {
+export default async (fastify) => {
   const userService = new UserService();
   const postService = new PostService();
   const likeService = new LikeService();
