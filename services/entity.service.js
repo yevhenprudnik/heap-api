@@ -11,7 +11,7 @@ export class EntityService {
     return this.queryBuilder.findOne(filter);
   }
 
-  async search(filter, relations) {
+  async search(filter, relations = []) {
     const query = this.queryBuilder;
 
     relations.forEach(relation => query.withGraphFetched(relation));
