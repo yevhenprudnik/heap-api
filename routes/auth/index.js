@@ -14,13 +14,11 @@ export default async fastify => {
 
   fastify.post('/sign-up', Schemas.register, async (request, reply) => {
     const { body } = request;
-
     return service.signUp(body);
   });
 
   fastify.post('/sign-in', Schemas.login, async (request, reply) => {
     const { body } = request;
-
     return service.signIn(body);
   });
 
