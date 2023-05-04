@@ -6,6 +6,29 @@ const user = {
   password: typeString,
 };
 
+export const account = {
+  schema: {
+    '2xx': {
+      type: 'object',
+      response: {
+        properties: user,
+      },
+    },
+  },
+};
+
+export const refresh = {
+  schema: {
+    '2xx': {
+      type: 'object',
+      response: {
+        accessToken: typeString,
+        refreshToken: typeString,
+      }
+    }
+  }
+}
+
 const authInUser = {
   user: {
     type: 'object',
