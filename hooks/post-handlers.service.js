@@ -5,11 +5,16 @@ export class PostOwnershipChecker {
     this.postService = new PostService();
   }
 
-  checkPostOwnership = async (request, reply) => {
-    const { id } = request.body;
+  usePostOwnership = async (request, reply) => {
+    const { id } = request.params;
     const post = await this.postService.getOne({ id });
+
+    if(!post) {
+      throw new Error(`No post found, id = ${id}`);
+    }
+
     if (post.authorId !== request.user.id) {
-      throw new Error('you cannot edit posts that are not your own');
+      throw new Error('You cannot edit posts that are not your own');
     }
   };
 }

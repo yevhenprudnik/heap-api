@@ -1,12 +1,12 @@
 import { PostService } from '../../services/post.service.js';
-import * as Shema from './post.schemas.js';
+import * as Schema from './post.schemas.js';
 
 export default async (fastify, opts) => {
   const service = new PostService();
 
   fastify.post(
     '/',
-    { ...Shema.check, preHandler: fastify.useAccessAuth },
+    { ...Schema.createPost, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
       return service.create({ ...request.body, authorId: request.user.id });
     }
@@ -15,7 +15,8 @@ export default async (fastify, opts) => {
   fastify.patch(
     '/:id',
     {
-      preHandler: [fastify.useAccessAuth, fastify.checkPostOwnership],
+      ...Schema.updatePost,
+      preHandler: [fastify.useAccessAuth, fastify.usePostOwnership],
     },
     async (request, reply) => {
       const { id } = request.params;
@@ -25,18 +26,19 @@ export default async (fastify, opts) => {
   );
 
   fastify.delete(
-    '/',
+    '/:id',
     {
-      preHandler: [fastify.useAccessAuth, fastify.checkPostOwnership],
+      ...Schema.deletePost,
+      //preHandler: [fastify.useAccessAuth, fastify.usePostOwnership],
     },
     async (request, reply) => {
-      const { id } = request.body;
+      const { id } = request.params;
 
-      return service.delete({ id });
+      return service.deleteById(id);
     }
   );
 
-  fastify.get('/:id', async (request, reply) => {
+  fastify.get('/:id', Schema.getPost, async (request, reply) => {
     const { id } = request.params;
 
     return service.getOne({ id });

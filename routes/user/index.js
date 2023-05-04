@@ -1,5 +1,5 @@
 import { UserService } from '../../services/user.service.js';
-import * as Shema from './user.schemas.js';
+import * as Schema from './user.schemas.js';
 
 export default async (fastify, opts) => {
   const service = new UserService();
@@ -17,11 +17,11 @@ export default async (fastify, opts) => {
   fastify.patch(
     '/',
     {
-      ...Shema.check,
+      ...Schema.check,
       preHandler: [fastify.useAccessAuth],
     },
     async (request, reply) => {
-      const id = request.user.id;
+      const { id } = request.user;
 
       return service.update(id, request.body);
     }
@@ -30,11 +30,11 @@ export default async (fastify, opts) => {
   fastify.delete(
     '/',
     {
-      ...Shema.check,
+      ...Schema.check,
       preHandler: [fastify.useAccessAuth],
     },
     async (request, reply) => {
-      const { id } = request.user.id;
+      const { id } = request.user;
 
       return service.delete({ id });
     }

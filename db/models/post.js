@@ -33,6 +33,7 @@ export class Post extends Model {
           from: 'post.id',
           to: 'like.postId',
         },
+        cascadeDelete: true,
       },
     };
   }
