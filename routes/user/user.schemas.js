@@ -41,6 +41,12 @@ export const getUser = {
 
 export const updateUser = {
   schema: {
+    body: {
+      type: 'object',
+      properties: {
+        username: typeString,
+      },
+    },
     response: {
       '2xx': {
         type: 'object',
