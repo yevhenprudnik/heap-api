@@ -1,4 +1,5 @@
 import { PostService } from '../services/post.service.js';
+import { ApiError } from '../exceptions.js';
 
 export class PostOwnershipChecker {
   constructor() {
@@ -7,14 +8,18 @@ export class PostOwnershipChecker {
 
   usePostOwnership = async (request, reply) => {
     const { id } = request.params;
-    const post = await this.postService.getOne({ id });
 
-    if(!post) {
-      throw new Error(`No post found, id = ${id}`);
+    if (typeof id === 'undefined' || typeof request?.user?.id === 'undefined') {
+      throw new ApiError(403, 'Forbidden');
     }
 
-    if (post.authorId !== request.user.id) {
-      throw new Error('You cannot edit posts that are not your own');
+    const post = await this.postService.getOne({
+      id,
+      authorId: request.user.id,
+    });
+
+    if (typeof post === 'undefined' || post === null) {
+      throw new ApiError(403, 'Forbidden');
     }
   };
 }

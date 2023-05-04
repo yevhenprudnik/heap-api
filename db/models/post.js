@@ -17,7 +17,7 @@ export class Post extends Model {
 
   static get relationMappings() {
     return {
-      user: {
+      author: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {

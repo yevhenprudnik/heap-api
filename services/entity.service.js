@@ -7,8 +7,12 @@ export class EntityService {
     return this.model.query();
   }
 
-  async getOne(filter) {
-    return this.queryBuilder.findOne(filter);
+  async getOne(filter, relations = []) {
+    const query = this.queryBuilder;
+
+    relations.forEach(relation => query.withGraphFetched(relation));
+
+    return query.findOne(filter);
   }
 
   async search(filter, relations = []) {

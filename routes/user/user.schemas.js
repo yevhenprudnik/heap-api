@@ -6,17 +6,6 @@ const user = {
   password: typeString,
 };
 
-const userProperties = {
-  user: {
-    type: 'object',
-    properties: {
-      email: typeString,
-      username: typeString,
-      password: typeString,
-    },
-  },
-};
-
 export const check = {
   description: 'Returns user or throws an error for wrong credentials',
   schema: {
@@ -24,10 +13,10 @@ export const check = {
       type: 'object',
       properties: user,
     },
-    responce: {
+    response: {
       '2xx': {
         type: 'object',
-        properties: userProperties,
+        properties: user,
       },
     },
   },

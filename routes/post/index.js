@@ -4,11 +4,23 @@ import * as Schema from './post.schemas.js';
 export default async (fastify, opts) => {
   const service = new PostService();
 
+  fastify.get('/:id', Schema.getPost, async (request, reply) => {
+    const { id } = request.params;
+
+    return service.getOne({ id }, ['author']);
+  });
+
+  fastify.get('/', async (request, reply) => {
+    return service.search(request.query, ['author']);
+  });
+
   fastify.post(
     '/',
     { ...Schema.createPost, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
-      return service.create({ ...request.body, authorId: request.user.id });
+      const { content } = request.body;
+
+      return service.create({ content, authorId: request.user.id });
     }
   );
 
@@ -21,7 +33,9 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { id } = request.params;
 
-      return service.update(id, request.body);
+      const { content } = request.body;
+
+      return service.update(id, { content });
     }
   );
 
@@ -29,7 +43,7 @@ export default async (fastify, opts) => {
     '/:id',
     {
       ...Schema.deletePost,
-      //preHandler: [fastify.useAccessAuth, fastify.usePostOwnership],
+      preHandler: [fastify.useAccessAuth, fastify.usePostOwnership],
     },
     async (request, reply) => {
       const { id } = request.params;
@@ -37,14 +51,4 @@ export default async (fastify, opts) => {
       return service.deleteById(id);
     }
   );
-
-  fastify.get('/:id', Schema.getPost, async (request, reply) => {
-    const { id } = request.params;
-
-    return service.getOne({ id });
-  });
-
-  fastify.get('/', async (request, reply) => {
-    return service.search(request.query, ['user']);
-  });
 };

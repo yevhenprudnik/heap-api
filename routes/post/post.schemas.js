@@ -7,10 +7,11 @@ const post = {
   authorId: typeNumber,
 };
 
-const postProperties = {
-  post: {
-    type: 'object',
-    properties: post,
+const author = {
+  type: 'object',
+  properties: {
+    id: typeNumber,
+    username: typeString,
   },
 };
 
@@ -19,13 +20,13 @@ export const createPost = {
   schema: {
     body: {
       type: 'object',
-      required: ['content', 'authorId'],
+      required: ['content'],
       properties: post,
     },
-    responce: {
+    response: {
       '2xx': {
         type: 'object',
-        properties: postProperties,
+        properties: post,
       },
     },
   },
@@ -46,10 +47,10 @@ export const updatePost = {
       },
       required: ['id'],
     },
-    responce: {
+    response: {
       '2xx': {
         type: 'object',
-        properties: postProperties,
+        properties: post,
       },
     },
   },
@@ -64,13 +65,8 @@ export const deletePost = {
       },
       required: ['id'],
     },
-    responce: {
-      '2xx': {
-        type: 'object',
-        properties: {
-          count: typeNumber,
-        },
-      },
+    response: {
+      '2xx': typeNumber,
     },
   },
 };
@@ -84,10 +80,13 @@ export const getPost = {
       },
       required: ['id'],
     },
-    responce: {
+    response: {
       '2xx': {
         type: 'object',
-        properties: postProperties,
+        properties: {
+          ...post,
+          author,
+        },
       },
     },
   },

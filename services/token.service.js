@@ -1,3 +1,5 @@
+import { ApiError } from '../exceptions.js';
+
 export class TokenService {
   constructor(jwt) {
     this.jwt = jwt;
@@ -47,7 +49,7 @@ export class TokenService {
     const result = this.jwt.verify(token);
 
     if (result.type !== type) {
-      throw new Error();
+      throw new ApiError(401, 'Unauthorized');
     }
 
     return result;

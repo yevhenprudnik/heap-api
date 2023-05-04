@@ -1,5 +1,6 @@
 import { TokenService } from '../services/token.service.js';
 import { UserService } from '../services/user.service.js';
+import { ApiError } from '../exceptions.js';
 
 export class AuthHandlersService {
   constructor(jwt) {
@@ -12,13 +13,13 @@ export class AuthHandlersService {
       const authHeaders = request.headers.authorization;
 
       if (!authHeaders) {
-        throw new Error('Unauthorized');
+        throw new ApiError(401, 'Unauthorized');
       }
 
       const [type, accessToken, refreshToken] = authHeaders.split(' ');
 
       if (type !== 'Bearer' || (!accessToken && !refreshToken)) {
-        throw new Error('Unauthorized');
+        throw new ApiError(401, 'Unauthorized');
       }
 
       const data = this.tokenService.validateTokens(tokenTypes, {
@@ -27,18 +28,18 @@ export class AuthHandlersService {
       });
 
       if (!data) {
-        throw new Error('Unauthorized');
+        throw new ApiError(401, 'Unauthorized');
       }
 
       const user = await this.userService.getOne({ id: data.id });
 
       if (!user) {
-        throw new Error('Unauthorized');
+        throw new ApiError(401, 'Unauthorized');
       }
 
       request.user = user;
     } catch {
-      throw new Error('Unauthorized');
+      throw new ApiError(401, 'Unauthorized');
     }
   };
 }
