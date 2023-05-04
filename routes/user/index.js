@@ -36,7 +36,7 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { id } = request.user;
 
-      return service.deleteById({ id });
+      return service.deleteById(id);
     }
   );
 };
