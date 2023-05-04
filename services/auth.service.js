@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import { UserService } from './user.service.js';
 import { TokenService } from './token.service.js';
+import { ApiError } from '../exceptions.js';
+
 export class AuthService {
   constructor(jwt) {
     this.userService = new UserService();
@@ -15,13 +17,14 @@ export class AuthService {
     );
 
     if (candidate?.username === username) {
-      throw new Error(
+      throw new ApiError(
+        400,
         `The user with username ${username} is already registered`
       );
     }
 
     if (candidate?.email === email) {
-      throw new Error(`User with email ${email} is already registered`);
+      throw new ApiError(400, `User with email ${email} is already registered`);
     }
 
     const hashPassword = await bcrypt.hash(password, 3);
@@ -41,13 +44,13 @@ export class AuthService {
     const user = await this.userService.getOne({ email });
 
     if (!user) {
-      throw new Error('Wrong credentials');
+      throw new ApiError(401, 'Unauthorized');
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      throw new Error(`Wrong credentials`);
+      throw new ApiError(401, 'Unauthorized');
     }
 
     return this.tokenService.generateTokens({ id: user.id });

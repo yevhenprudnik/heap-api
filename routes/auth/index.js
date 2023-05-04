@@ -6,27 +6,27 @@ export default async fastify => {
 
   fastify.get(
     '/',
-    { preHandler: fastify.useAccessAuth },
+    { ...Schemas.auth, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
       return request.user;
     }
   );
 
   fastify.post('/sign-up', Schemas.register, async (request, reply) => {
-    const { body } = request;
+    const { email, username, password } = request.body;
 
-    return service.signUp(body);
+    return service.signUp({ email, username, password });
   });
 
   fastify.post('/sign-in', Schemas.login, async (request, reply) => {
-    const { body } = request;
+    const { email, password } = request.body;
 
-    return service.signIn(body);
+    return service.signIn({ email, password });
   });
 
   fastify.get(
     '/refresh',
-    { preHandler: fastify.useRefreshAuth },
+    { ...Schemas.refresh, preHandler: fastify.useRefreshAuth },
     async (request, reply) => {
       return service.refresh(request.user);
     }

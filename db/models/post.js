@@ -17,7 +17,7 @@ export class Post extends Model {
 
   static get relationMappings() {
     return {
-      user: {
+      author: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
@@ -33,6 +33,7 @@ export class Post extends Model {
           from: 'post.id',
           to: 'like.postId',
         },
+        cascadeDelete: true,
       },
     };
   }

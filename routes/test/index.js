@@ -2,7 +2,7 @@ import { UserService } from '../../services/user.service.js';
 import { PostService } from '../../services/post.service.js';
 import { LikeService } from '../../services/like.service.js';
 
-export default async (fastify) => {
+export default async fastify => {
   const userService = new UserService();
   const postService = new PostService();
   const likeService = new LikeService();
@@ -12,7 +12,7 @@ export default async (fastify) => {
   });
 
   fastify.get('/post', async (request, reply) => {
-    return postService.search({}, ['user', 'likes']);
+    return postService.search({}, ['author', 'likes']);
   });
 
   fastify.get('/user-posts', async (request, reply) => {
@@ -31,7 +31,14 @@ export default async (fastify) => {
     return likeService.search({});
   });
 
-  fastify.post('/like', async (request, reply) => {
-    return likeService.create(request.body);
-  });
+  fastify.post(
+    '/like',
+    { preHandler: fastify.useAccessAuth },
+    async (request, reply) => {
+      return likeService.create({
+        authorId: request.user.id,
+        postId: request.body.postId,
+      });
+    }
+  );
 };

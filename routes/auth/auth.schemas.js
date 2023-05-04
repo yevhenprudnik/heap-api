@@ -1,21 +1,26 @@
 const typeString = { type: 'string' };
+const typeNumber = { type: 'number' };
 
 const user = {
+  id: typeNumber,
   email: typeString,
   username: typeString,
-  password: typeString,
 };
 
-const authInUser = {
-  user: {
-    type: 'object',
-    properties: {
-      email: typeString,
-      username: typeString,
-    },
-  },
+const tokens = {
   accessToken: typeString,
   refreshToken: typeString,
+};
+
+export const auth = {
+  schema: {
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: user,
+      },
+    },
+  },
 };
 
 export const login = {
@@ -24,12 +29,15 @@ export const login = {
     body: {
       type: 'object',
       required: ['email', 'password'],
-      properties: user,
+      properties: {
+        ...user,
+        email: typeString,
+      },
     },
     response: {
       '2xx': {
         type: 'object',
-        properties: authInUser,
+        properties: tokens,
       },
     },
   },
@@ -41,12 +49,26 @@ export const register = {
     body: {
       type: 'object',
       required: ['email', 'password', 'username'],
-      properties: user,
+      properties: {
+        ...user,
+        email: typeString,
+      },
     },
     response: {
       '2xx': {
         type: 'object',
-        properties: authInUser,
+        properties: tokens,
+      },
+    },
+  },
+};
+
+export const refresh = {
+  schema: {
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: tokens,
       },
     },
   },
