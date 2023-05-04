@@ -9,10 +9,6 @@ const user = {
 
 export const getUsers = {
   schema: {
-    body: {
-      type: 'object',
-      properties: user,
-    },
     response: {
       '2xx': {
         type: 'array',
