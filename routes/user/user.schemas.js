@@ -1,13 +1,13 @@
 const typeString = { type: 'string' };
+const typeNumber = { type: 'number' };
 
 const user = {
+  id: typeNumber,
   email: typeString,
   username: typeString,
-  password: typeString,
 };
 
-export const check = {
-  description: 'Returns user or throws an error for wrong credentials',
+export const getUsers = {
   schema: {
     body: {
       type: 'object',
@@ -15,9 +15,49 @@ export const check = {
     },
     response: {
       '2xx': {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: user,
+        },
+      },
+    },
+  },
+};
+
+export const getUser = {
+  schema: {
+    params: {
+      type: 'object',
+      properties: {
+        id: typeNumber,
+      },
+      required: ['id'],
+    },
+    response: {
+      '2xx': {
         type: 'object',
         properties: user,
       },
+    },
+  },
+};
+
+export const updateUser = {
+  schema: {
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: user,
+      },
+    },
+  },
+};
+
+export const deleteUser = {
+  schema: {
+    response: {
+      '2xx': typeNumber,
     },
   },
 };

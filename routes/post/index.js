@@ -10,7 +10,7 @@ export default async (fastify, opts) => {
     return service.getOne({ id }, ['author']);
   });
 
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', Schema.getPosts, async (request, reply) => {
     return service.search(request.query, ['author']);
   });
 

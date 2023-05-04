@@ -1,23 +1,23 @@
 import { UserService } from '../../services/user.service.js';
-import * as Schema from './user.schemas.js';
+import * as Schemas from './user.schemas.js';
 
 export default async (fastify, opts) => {
   const service = new UserService();
 
-  fastify.get('/', async (request, reply) => {
-    return service.search(request.query);
-  });
-
-  fastify.get('/:id', async (request, reply) => {
+  fastify.get('/:id', Schemas.getUser, async (request, reply) => {
     const { id } = request.params;
 
     return service.getOne({ id });
   });
 
+  fastify.get('/', Schemas.getUsers, async (request, reply) => {
+    return service.search(request.query);
+  });
+
   fastify.patch(
     '/',
     {
-      ...Schema.check,
+      ...Schemas.updateUser,
       preHandler: [fastify.useAccessAuth],
     },
     async (request, reply) => {
@@ -30,13 +30,13 @@ export default async (fastify, opts) => {
   fastify.delete(
     '/',
     {
-      ...Schema.check,
+      ...Schemas.deleteUser,
       preHandler: [fastify.useAccessAuth],
     },
     async (request, reply) => {
       const { id } = request.user;
 
-      return service.delete({ id });
+      return service.deleteById({ id });
     }
   );
 };

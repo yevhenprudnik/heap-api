@@ -15,6 +15,51 @@ const author = {
   },
 };
 
+export const getPost = {
+  schema: {
+    params: {
+      type: 'object',
+      properties: {
+        id: typeNumber,
+      },
+      required: ['id'],
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: {
+          ...post,
+          author,
+        },
+      },
+    },
+  },
+};
+
+export const getPosts = {
+  schema: {
+    params: {
+      type: 'object',
+      properties: {
+        id: typeNumber,
+      },
+      required: ['id'],
+    },
+    response: {
+      '2xx': {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            ...post,
+            author,
+          },
+        },
+      },
+    },
+  },
+};
+
 export const createPost = {
   description: 'Returns post or throws an error for wrong credentials',
   schema: {
@@ -67,27 +112,6 @@ export const deletePost = {
     },
     response: {
       '2xx': typeNumber,
-    },
-  },
-};
-
-export const getPost = {
-  schema: {
-    params: {
-      type: 'object',
-      properties: {
-        id: typeNumber,
-      },
-      required: ['id'],
-    },
-    response: {
-      '2xx': {
-        type: 'object',
-        properties: {
-          ...post,
-          author,
-        },
-      },
     },
   },
 };
