@@ -14,6 +14,8 @@ const tokens = {
 
 export const auth = {
   schema: {
+    tags: ['Auth'],
+    security: [{ ApiToken: [] }],
     response: {
       '2xx': {
         type: 'object',
@@ -23,15 +25,15 @@ export const auth = {
   },
 };
 
-export const login = {
+export const signIn = {
   schema: {
-    description: 'Returns user or throws an error for wrong credentials',
+    tags: ['Auth'],
     body: {
       type: 'object',
       required: ['email', 'password'],
       properties: {
-        ...user,
         email: typeString,
+        password: typeString,
       },
     },
     response: {
@@ -43,15 +45,16 @@ export const login = {
   },
 };
 
-export const register = {
+export const signUp = {
   schema: {
-    description: 'Returns user or throws an error for already used credentials',
+    tags: ['Auth'],
     body: {
       type: 'object',
       required: ['email', 'password', 'username'],
       properties: {
-        ...user,
         email: typeString,
+        username: typeString,
+        password: typeString,
       },
     },
     response: {
@@ -65,6 +68,8 @@ export const register = {
 
 export const refresh = {
   schema: {
+    tags: ['Auth'],
+    security: [{ ApiToken: [] }],
     response: {
       '2xx': {
         type: 'object',
