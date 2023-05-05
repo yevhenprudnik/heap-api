@@ -12,13 +12,13 @@ export default async fastify => {
     }
   );
 
-  fastify.post('/sign-up', Schemas.register, async (request, reply) => {
+  fastify.post('/sign-up', Schemas.signUp, async (request, reply) => {
     const { email, username, password } = request.body;
 
     return service.signUp({ email, username, password });
   });
 
-  fastify.post('/sign-in', Schemas.login, async (request, reply) => {
+  fastify.post('/sign-in', Schemas.signIn, async (request, reply) => {
     const { email, password } = request.body;
 
     return service.signIn({ email, password });
