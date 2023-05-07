@@ -16,13 +16,10 @@ const author = {
 };
 
 const comment = {
-  type: 'object',
-  properties: {
-    id: typeNumber,
-    authorId: typeNumber,
-    content: typeString,
-    author: author,
-  },
+  id: typeNumber,
+  authorId: typeNumber,
+  content: typeString,
+  author: author,
 };
 
 export const getPost = {
@@ -42,7 +39,10 @@ export const getPost = {
           author,
           comments: {
             type: 'array',
-            items: comment,
+            items: {
+              type: 'object',
+              properties: comment,
+            },
           },
         },
       },
