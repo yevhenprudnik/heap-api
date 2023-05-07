@@ -9,6 +9,7 @@ const user = {
 
 export const getUsers = {
   schema: {
+    tags: ['User'],
     response: {
       '2xx': {
         type: 'array',
@@ -23,6 +24,7 @@ export const getUsers = {
 
 export const getUser = {
   schema: {
+    tags: ['User'],
     params: {
       type: 'object',
       properties: {
@@ -41,6 +43,14 @@ export const getUser = {
 
 export const updateUser = {
   schema: {
+    tags: ['User'],
+    security: [{ ApiToken: [] }],
+    body: {
+      type: 'object',
+      properties: {
+        username: typeString,
+      },
+    },
     response: {
       '2xx': {
         type: 'object',
@@ -52,6 +62,8 @@ export const updateUser = {
 
 export const deleteUser = {
   schema: {
+    tags: ['User'],
+    security: [{ ApiToken: [] }],
     response: {
       '2xx': typeNumber,
     },

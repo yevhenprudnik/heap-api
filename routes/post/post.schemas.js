@@ -24,6 +24,7 @@ const comment = {
 
 export const getPost = {
   schema: {
+    tags: ['Post'],
     params: {
       type: 'object',
       properties: {
@@ -52,13 +53,7 @@ export const getPost = {
 
 export const getPosts = {
   schema: {
-    params: {
-      type: 'object',
-      properties: {
-        id: typeNumber,
-      },
-      required: ['id'],
-    },
+    tags: ['Post'],
     response: {
       '2xx': {
         type: 'array',
@@ -75,12 +70,15 @@ export const getPosts = {
 };
 
 export const createPost = {
-  description: 'Returns post or throws an error for wrong credentials',
   schema: {
+    tags: ['Post'],
+    security: [{ ApiToken: [] }],
     body: {
       type: 'object',
       required: ['content'],
-      properties: post,
+      properties: {
+        content: typeString,
+      },
     },
     response: {
       '2xx': {
@@ -93,6 +91,8 @@ export const createPost = {
 
 export const updatePost = {
   schema: {
+    tags: ['Post'],
+    security: [{ ApiToken: [] }],
     body: {
       type: 'object',
       properties: {
@@ -117,6 +117,8 @@ export const updatePost = {
 
 export const deletePost = {
   schema: {
+    tags: ['Post'],
+    security: [{ ApiToken: [] }],
     params: {
       type: 'object',
       properties: {

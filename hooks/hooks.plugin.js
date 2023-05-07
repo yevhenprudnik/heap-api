@@ -2,6 +2,7 @@ import fp from 'fastify-plugin';
 import { AuthHandlersService } from './auth-handlers.service.js';
 import { PostOwnershipChecker } from './post-handlers.service.js';
 import { CommentOwnershipChecker } from './comment-handlers.service.js';
+import { PostOwnershipChecker } from './post-ownership-handler.service.js';
 
 export default fp(async fastify => {
   const authHandlersService = new AuthHandlersService(fastify.jwt);
@@ -24,6 +25,8 @@ export default fp(async fastify => {
     'useCommentOwnership',
     commentOwnershipChecker.useCommentOwnership
   );
+
+  fastify.decorate('usePostOwnership', postOwnershipChecker.usePostOwnership);
 
   console.log('Hooks plugin registered.');
 });

@@ -1,52 +1,79 @@
 const typeString = { type: 'string' };
+const typeNumber = { type: 'number' };
 
 const user = {
+  id: typeNumber,
   email: typeString,
   username: typeString,
-  password: typeString,
 };
 
-const authInUser = {
-  user: {
-    type: 'object',
-    properties: {
-      email: typeString,
-      username: typeString,
-    },
-  },
+const tokens = {
   accessToken: typeString,
   refreshToken: typeString,
 };
 
-export const login = {
+export const auth = {
   schema: {
-    description: 'Returns user or throws an error for wrong credentials',
-    body: {
-      type: 'object',
-      required: ['email', 'password'],
-      properties: user,
-    },
+    tags: ['Auth'],
+    security: [{ ApiToken: [] }],
     response: {
       '2xx': {
         type: 'object',
-        properties: authInUser,
+        properties: user,
       },
     },
   },
 };
 
-export const register = {
+export const signIn = {
   schema: {
-    description: 'Returns user or throws an error for already used credentials',
+    tags: ['Auth'],
     body: {
       type: 'object',
-      required: ['email', 'password', 'username'],
-      properties: user,
+      required: ['email', 'password'],
+      properties: {
+        email: typeString,
+        password: typeString,
+      },
     },
     response: {
       '2xx': {
         type: 'object',
-        properties: authInUser,
+        properties: tokens,
+      },
+    },
+  },
+};
+
+export const signUp = {
+  schema: {
+    tags: ['Auth'],
+    body: {
+      type: 'object',
+      required: ['email', 'password', 'username'],
+      properties: {
+        email: typeString,
+        username: typeString,
+        password: typeString,
+      },
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: tokens,
+      },
+    },
+  },
+};
+
+export const refresh = {
+  schema: {
+    tags: ['Auth'],
+    security: [{ ApiToken: [] }],
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: tokens,
       },
     },
   },
