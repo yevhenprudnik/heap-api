@@ -7,7 +7,7 @@ export default async (fastify, opts) => {
   fastify.get('/:id', Schema.getPost, async (request, reply) => {
     const { id } = request.params;
 
-    return service.getOne({ id }, ['author']);
+    return service.getOne({ id }, ['author', 'comments.author']);
   });
 
   fastify.get('/', Schema.getPosts, async (request, reply) => {

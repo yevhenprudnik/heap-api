@@ -43,26 +43,4 @@ export default async fastify => {
       });
     }
   );
-
-  fastify.post(
-    '/comment',
-    { preHandler: fastify.useAccessAuth },
-    async (request, reply) => {
-      return commentService.create({
-        authorId: request.user.id,
-        postId: request.body.postId,
-        text: request.body.text,
-      });
-    }
-  );
-
-  fastify.delete(
-    '/comment/:id',
-    { preHandler: fastify.useAccessAuth },
-    async (request, reply) => {
-      const { id } = request.params;
-
-      return commentService.deleteById(id);
-    }
-  );
 };

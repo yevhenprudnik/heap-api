@@ -16,12 +16,12 @@ export default async (fastify, opts) => {
     '/',
     { ...Schema.createComment, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
-      const { text, postId } = request.body;
+      const { content, postId } = request.body;
 
       return service.create({
         authorId: request.user.id,
         postId,
-        text,
+        content,
       });
     }
   );
@@ -35,9 +35,9 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { id } = request.params;
 
-      const { text } = request.body;
+      const { content } = request.body;
 
-      return service.update(id, { text });
+      return service.update(id, { content });
     }
   );
 

@@ -15,6 +15,16 @@ const author = {
   },
 };
 
+const comment = {
+  type: 'object',
+  properties: {
+    id: typeNumber,
+    authorId: typeNumber,
+    content: typeString,
+    author: author,
+  },
+};
+
 export const getPost = {
   schema: {
     params: {
@@ -30,6 +40,10 @@ export const getPost = {
         properties: {
           ...post,
           author,
+          comments: {
+            type: 'array',
+            items: comment,
+          },
         },
       },
     },

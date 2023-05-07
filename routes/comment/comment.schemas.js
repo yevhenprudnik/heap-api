@@ -4,7 +4,7 @@ const typeNumber = { type: 'number' };
 const comment = {
   id: typeNumber,
   postId: typeNumber,
-  text: typeString,
+  content: typeString,
 };
 
 const author = {
@@ -58,7 +58,7 @@ export const createComment = {
   schema: {
     body: {
       type: 'object',
-      required: ['text'],
+      required: ['content'],
       properties: comment,
     },
     response: {
@@ -75,7 +75,7 @@ export const updateComment = {
     body: {
       type: 'object',
       properties: {
-        text: typeString,
+        content: typeString,
       },
     },
     params: {
