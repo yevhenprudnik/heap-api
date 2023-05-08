@@ -13,13 +13,13 @@ export class AuthHandlersService {
       const authHeaders = request.headers.authorization;
 
       if (!authHeaders) {
-        throw new ApiError(401, 'Unauthorized');
+        throw ApiError.Unauthorized();
       }
 
       const [type, accessToken, refreshToken] = authHeaders.split(' ');
 
       if (type !== 'Bearer' || (!accessToken && !refreshToken)) {
-        throw new ApiError(401, 'Unauthorized');
+        throw ApiError.Unauthorized();
       }
 
       const data = this.tokenService.validateTokens(tokenTypes, {
@@ -28,18 +28,22 @@ export class AuthHandlersService {
       });
 
       if (!data) {
-        throw new ApiError(401, 'Unauthorized');
+        throw ApiError.Unauthorized();
       }
 
       const user = await this.userService.getOne({ id: data.id });
 
       if (!user) {
-        throw new ApiError(401, 'Unauthorized');
+        throw ApiError.Unauthorized();
       }
 
       request.user = user;
-    } catch {
-      throw new ApiError(401, 'Unauthorized');
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+
+      throw ApiError.Unauthorized();
     }
   };
 }

@@ -10,7 +10,7 @@ export class PostOwnershipChecker {
     const { id } = request.params;
 
     if (typeof id === 'undefined' || typeof request?.user?.id === 'undefined') {
-      throw new ApiError(403, 'Forbidden');
+      throw ApiError.Forbidden()
     }
 
     const post = await this.postService.getOne({
@@ -19,7 +19,7 @@ export class PostOwnershipChecker {
     });
 
     if (typeof post === 'undefined' || post === null) {
-      throw new ApiError(403, 'Forbidden');
+      throw ApiError.Forbidden()
     }
   };
 }

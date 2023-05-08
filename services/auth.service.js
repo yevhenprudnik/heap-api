@@ -17,14 +17,15 @@ export class AuthService {
     );
 
     if (candidate?.username === username) {
-      throw new ApiError(
-        400,
+      throw ApiError.BadRequest(
         `The user with username ${username} is already registered`
       );
     }
 
     if (candidate?.email === email) {
-      throw new ApiError(400, `User with email ${email} is already registered`);
+      throw ApiError.BadRequest(
+        `User with email ${email} is already registered`
+      );
     }
 
     const hashPassword = await bcrypt.hash(password, 3);
@@ -44,13 +45,13 @@ export class AuthService {
     const user = await this.userService.getOne({ email });
 
     if (!user) {
-      throw new ApiError(401, 'Unauthorized');
+      throw ApiError.Unauthorized();
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      throw new ApiError(401, 'Unauthorized');
+      throw ApiError.Unauthorized();
     }
 
     return this.tokenService.generateTokens({ id: user.id });

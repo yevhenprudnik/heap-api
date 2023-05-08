@@ -10,7 +10,7 @@ export class CommentOwnershipChecker {
     const { id } = request.params;
 
     if (typeof id === 'undefined' || typeof request?.user?.id === 'undefined') {
-      throw new ApiError(403, 'Forbidden');
+      throw ApiError.Forbidden();
     }
 
     const comment = await this.commentService.getOne({
@@ -19,7 +19,7 @@ export class CommentOwnershipChecker {
     });
 
     if (typeof comment === 'undefined' || comment === null) {
-      throw new ApiError(403, 'Forbidden');
+      throw ApiError.Forbidden();
     }
   };
 }
