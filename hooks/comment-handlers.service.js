@@ -9,8 +9,12 @@ export class CommentOwnershipChecker {
   useCommentOwnership = async (request, reply) => {
     const { id } = request.params;
 
-    if (typeof id === 'undefined' || typeof request?.user?.id === 'undefined') {
-      throw ApiError.Forbidden();
+    if (typeof request?.user?.id === 'undefined' || request?.user?.id === null) {
+      throw ApiError.Forbidden('No authorization provided.');
+    }
+
+    if (typeof id === 'undefined' || id === null) {
+      throw ApiError.Forbidden('Invalid input format.');
     }
 
     const comment = await this.commentService.getOne({
@@ -19,7 +23,9 @@ export class CommentOwnershipChecker {
     });
 
     if (typeof comment === 'undefined' || comment === null) {
-      throw ApiError.Forbidden();
+      throw ApiError.Forbidden(
+        'You do not have access to perform this action.'
+      );
     }
   };
 }

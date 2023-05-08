@@ -45,13 +45,13 @@ export class AuthService {
     const user = await this.userService.getOne({ email });
 
     if (!user) {
-      throw ApiError.Unauthorized();
+      throw ApiError.Unauthorized('User not exist.');
     }
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      throw ApiError.Unauthorized();
+      throw ApiError.Unauthorized('Wrong credentials.');
     }
 
     return this.tokenService.generateTokens({ id: user.id });

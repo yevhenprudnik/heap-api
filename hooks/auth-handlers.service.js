@@ -13,13 +13,13 @@ export class AuthHandlersService {
       const authHeaders = request.headers.authorization;
 
       if (!authHeaders) {
-        throw ApiError.Unauthorized();
+        throw ApiError.Unauthorized('No headers provided.');
       }
 
       const [type, accessToken, refreshToken] = authHeaders.split(' ');
 
       if (type !== 'Bearer' || (!accessToken && !refreshToken)) {
-        throw ApiError.Unauthorized();
+        throw ApiError.Unauthorized('Invalid token format.');
       }
 
       const data = this.tokenService.validateTokens(tokenTypes, {
@@ -34,7 +34,7 @@ export class AuthHandlersService {
       const user = await this.userService.getOne({ id: data.id });
 
       if (!user) {
-        throw ApiError.Unauthorized();
+        throw ApiError.Unauthorized('User not exist.');
       }
 
       request.user = user;

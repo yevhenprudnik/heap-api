@@ -49,7 +49,7 @@ export class TokenService {
     const result = this.jwt.verify(token);
 
     if (result.type !== type) {
-      throw ApiError.Unauthorized();
+      throw ApiError.Unauthorized('Invalid token format.');
     }
 
     return result;

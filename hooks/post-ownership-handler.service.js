@@ -9,17 +9,26 @@ export class PostOwnershipChecker {
   usePostOwnership = async (request, reply) => {
     const { id } = request.params;
 
-    if (typeof id === 'undefined' || typeof request?.user?.id === 'undefined') {
-      throw ApiError.Forbidden()
+    if (
+      typeof request?.user?.id === 'undefined' ||
+      request?.user?.id === null
+    ) {
+      throw ApiError.Forbidden('No authorization provided.');
     }
 
-    const post = await this.postService.getOne({
+    if (typeof id === 'undefined' || id === null) {
+      throw ApiError.Forbidden('Invalid input format.');
+    }
+
+    const post = await this.commentService.getOne({
       id,
       authorId: request.user.id,
     });
 
     if (typeof post === 'undefined' || post === null) {
-      throw ApiError.Forbidden()
+      throw ApiError.Forbidden(
+        'You do not have access to perform this action.'
+      );
     }
   };
 }
