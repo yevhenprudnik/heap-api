@@ -1,11 +1,13 @@
 import { UserService } from '../../services/user.service.js';
 import { PostService } from '../../services/post.service.js';
 import { LikeService } from '../../services/like.service.js';
+import { CommentService } from '../../services/comment.service.js';
 
 export default async fastify => {
   const userService = new UserService();
   const postService = new PostService();
   const likeService = new LikeService();
+  const commentService = new CommentService();
 
   fastify.get(
     '/user',

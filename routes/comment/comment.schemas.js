@@ -1,10 +1,10 @@
 const typeString = { type: 'string' };
 const typeNumber = { type: 'number' };
 
-const post = {
+const comment = {
   id: typeNumber,
+  postId: typeNumber,
   content: typeString,
-  authorId: typeNumber,
 };
 
 const author = {
@@ -15,16 +15,8 @@ const author = {
   },
 };
 
-const comment = {
-  id: typeNumber,
-  authorId: typeNumber,
-  content: typeString,
-  author: author,
-};
-
-export const getPost = {
+export const getComment = {
   schema: {
-    tags: ['Post'],
     params: {
       type: 'object',
       properties: {
@@ -36,31 +28,23 @@ export const getPost = {
       '2xx': {
         type: 'object',
         properties: {
-          ...post,
+          ...comment,
           author,
-          comments: {
-            type: 'array',
-            items: {
-              type: 'object',
-              properties: comment,
-            },
-          },
         },
       },
     },
   },
 };
 
-export const getPosts = {
+export const getComments = {
   schema: {
-    tags: ['Post'],
     response: {
       '2xx': {
         type: 'array',
         items: {
           type: 'object',
           properties: {
-            ...post,
+            ...comment,
             author,
           },
         },
@@ -69,30 +53,25 @@ export const getPosts = {
   },
 };
 
-export const createPost = {
+export const createComment = {
+  description: 'Returns comment or throws an error for wrong credentials',
   schema: {
-    tags: ['Post'],
-    security: [{ ApiToken: [] }],
     body: {
       type: 'object',
       required: ['content'],
-      properties: {
-        content: typeString,
-      },
+      properties: comment,
     },
     response: {
       '2xx': {
         type: 'object',
-        properties: post,
+        properties: comment,
       },
     },
   },
 };
 
-export const updatePost = {
+export const updateComment = {
   schema: {
-    tags: ['Post'],
-    security: [{ ApiToken: [] }],
     body: {
       type: 'object',
       properties: {
@@ -109,16 +88,14 @@ export const updatePost = {
     response: {
       '2xx': {
         type: 'object',
-        properties: post,
+        properties: comment,
       },
     },
   },
 };
 
-export const deletePost = {
+export const deleteComment = {
   schema: {
-    tags: ['Post'],
-    security: [{ ApiToken: [] }],
     params: {
       type: 'object',
       properties: {
