@@ -69,3 +69,43 @@ export const deleteUser = {
     },
   },
 };
+
+export const follow = {
+  schema: {
+    tags: ['User'],
+    security: [{ ApiToken: [] }],
+    params: {
+      type: 'object',
+      properties: {
+        accountId: typeNumber,
+      },
+      required: ['accountId'],
+    },
+    response: {
+      '2xx': {
+        type: 'object',
+        properties: {
+          userId: typeNumber,
+          accountId: typeNumber,
+        },
+      },
+    },
+  },
+};
+
+export const unfollow = {
+  schema: {
+    tags: ['User'],
+    security: [{ ApiToken: [] }],
+    params: {
+      type: 'object',
+      properties: {
+        accountId: typeNumber,
+      },
+      required: ['accountId'],
+    },
+    response: {
+      '2xx': typeNumber,
+    },
+  },
+}

@@ -1,20 +1,21 @@
-exports.up = function (knex) {
+export const up = function (knex) {
   return knex.schema.createTable('follower', table => {
     table.increments('id').primary();
     table
-      .integer('user_id')
+      .integer('userId')
       .references('user.id')
       .notNullable()
       .onDelete('CASCADE');
     table
-      .integer('account_id')
+      .integer('accountId')
       .references('user.id')
       .notNullable()
       .onDelete('CASCADE');
+    table.unique(['userId', 'accountId'])
     table.timestamps(true, true);
   });
 };
 
-exports.down = function (knex) {
+export const down = function (knex) {
   return knex.schema.dropTable('follower');
 };
