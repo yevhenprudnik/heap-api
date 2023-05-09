@@ -20,15 +20,15 @@ export default async (fastify, opts) => {
   );
 
   fastify.post(
-    '/unfollow/:userId',
+    '/unfollow/:id',
     {
       ...Schemas.unfollow,
       preHandler: [fastify.useAccessAuth],
     },
     async (request, reply) => {
-      const { userId } = request.params;
+      const { id } = request.params;
 
-      return service.deleteById(userId);
+      return service.deleteById(id);
     }
   );
 };
