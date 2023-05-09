@@ -1,24 +1,25 @@
 import { CommentService } from '../../services/comment.service.js';
-import * as Schema from './comment.schemas.js';
-export default async (fastify, opts) => {
-  const service = new CommentService();
+import * as Schemas from './comment.schemas.js';
 
-  fastify.get('/', Schema.getComments, async (request, reply) => {
-    return service.search(request.query, ['author']);
+export default async (fastify, opts) => {
+  const commentService = new CommentService();
+
+  fastify.get('/', Schemas.getComments, async (request, reply) => {
+    return commentService.search(request.query, ['author']);
   });
 
-  fastify.get('/:id', Schema.getComment, async (request, reply) => {
+  fastify.get('/:id', Schemas.getComment, async (request, reply) => {
     const { id } = request.params;
-    return service.getOne({ id }, ['author']);
+    return commentService.getOne({ id }, ['author']);
   });
 
   fastify.post(
     '/',
-    { ...Schema.createComment, preHandler: fastify.useAccessAuth },
+    { ...Schemas.createComment, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
       const { content, postId } = request.body;
 
-      return service.create({
+      return commentService.create({
         authorId: request.user.id,
         postId,
         content,
@@ -29,7 +30,7 @@ export default async (fastify, opts) => {
   fastify.patch(
     '/:id',
     {
-      ...Schema.updateComment,
+      ...Schemas.updateComment,
       preHandler: [fastify.useAccessAuth, fastify.useCommentOwnership],
     },
     async (request, reply) => {
@@ -37,20 +38,20 @@ export default async (fastify, opts) => {
 
       const { content } = request.body;
 
-      return service.update(id, { content });
+      return commentService.update(id, { content });
     }
   );
 
   fastify.delete(
     '/:id',
     {
-      ...Schema.deleteComment,
+      ...Schemas.deleteComment,
       preHandler: [fastify.useAccessAuth, fastify.useCommentOwnership],
     },
     async (request, reply) => {
       const { id } = request.params;
 
-      return service.deleteById(id);
+      return commentService.deleteById(id);
     }
   );
 };
