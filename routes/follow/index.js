@@ -1,12 +1,11 @@
 import * as Schemas from './follower.schemas.js';
 import { FollowerService } from '../../services/follower.service.js';
-import fastifyCors from '@fastify/cors';
 
 export default async (fastify, opts) => {
   const service = new FollowerService();
 
   fastify.post(
-    '/follow/:userId',
+    '/:userId',
     {
       ...Schemas.follow,
       preHandler: [fastify.useAccessAuth],
@@ -19,8 +18,8 @@ export default async (fastify, opts) => {
     }
   );
 
-  fastify.post(
-    '/unfollow/:id',
+  fastify.delete(
+    '/:id',
     {
       ...Schemas.unfollow,
       preHandler: [fastify.useAccessAuth],

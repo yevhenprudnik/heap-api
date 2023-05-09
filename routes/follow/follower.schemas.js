@@ -30,9 +30,9 @@ export const unfollow = {
     params: {
       type: 'object',
       properties: {
-        userId: typeNumber,
+        id: typeNumber,
       },
-      required: ['userId'],
+      required: ['id'],
     },
     response: {
       '2xx': typeNumber,
