@@ -11,10 +11,7 @@ export default async (fastify, opts) => {
       preHandler: [fastify.useAccessAuth],
     },
     async (request, reply) => {
-      const authorId = request.user.id;
-      const { userId } = request.params;
-
-      return service.follow({ authorId, userId });
+      return service.follow(request.user.id, request.params.userId);
     }
   );
 

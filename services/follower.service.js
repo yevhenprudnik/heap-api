@@ -7,13 +7,13 @@ export class FollowerService extends EntityService {
     super(Follower);
   }
 
-  async follow(payload) {
-    if (payload.userId === payload.accountId) {
+  async follow(authorId, userId) {
+    if (userId === authorId) {
       throw ApiError.BadRequest('You cannot follow yourself.');
     }
 
     return Follower.query()
-      .insert(payload)
+      .insert({ userId, authorId })
       .onConflict(['authorId', 'userId'])
       .merge();
   }
