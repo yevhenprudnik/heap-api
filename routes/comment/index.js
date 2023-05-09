@@ -2,15 +2,15 @@ import { CommentService } from '../../services/comment.service.js';
 import * as Schemas from './comment.schemas.js';
 
 export default async (fastify, opts) => {
-  const commentService = new CommentService();
+  const service = new CommentService();
 
   fastify.get('/', Schemas.getComments, async (request, reply) => {
-    return commentService.search(request.query, ['author']);
+    return service.search(request.query, ['author']);
   });
 
   fastify.get('/:id', Schemas.getComment, async (request, reply) => {
     const { id } = request.params;
-    return commentService.getOne({ id }, ['author']);
+    return service.getOne({ id }, ['author']);
   });
 
   fastify.post(
@@ -19,7 +19,7 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { content, postId } = request.body;
 
-      return commentService.create({
+      return service.create({
         authorId: request.user.id,
         postId,
         content,
@@ -38,7 +38,7 @@ export default async (fastify, opts) => {
 
       const { content } = request.body;
 
-      return commentService.update(id, { content });
+      return service.update(id, { content });
     }
   );
 
@@ -51,7 +51,7 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { id } = request.params;
 
-      return commentService.deleteById(id);
+      return service.deleteById(id);
     }
   );
 };

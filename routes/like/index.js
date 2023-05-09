@@ -2,12 +2,12 @@ import { LikeService } from '../../services/like.service.js';
 import * as Schemas from './like.schemas.js';
 
 export default async (fastify, opts) => {
-  const likeService = new LikeService();
+  const service = new LikeService();
 
   fastify.get('/:id', Schemas.getLikes, async (request, reply) => {
     const type = request.query.type;
 
-    return likeService.search(
+    return service.search(
       {
         type,
         [type + 'Id']: request.params.id,
@@ -22,7 +22,7 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const type = request.query.type;
 
-      return likeService.handleLike(request.user.id, request.params.id, type);
+      return service.handleLike(request.user.id, request.params.id, type);
     }
   );
 };
