@@ -1,6 +1,5 @@
 import { UserService } from '../../services/user.service.js';
 import * as Schemas from './user.schemas.js';
-import fastifyCors from '@fastify/cors';
 
 export default async (fastify, opts) => {
   const service = new UserService();
