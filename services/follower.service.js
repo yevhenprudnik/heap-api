@@ -1,4 +1,5 @@
 import { Follower } from '../db/models/follower.js';
+import { ApiError } from '../exceptions.js';
 import { EntityService } from './entity.service.js';
 
 export class FollowerService extends EntityService {
@@ -8,19 +9,12 @@ export class FollowerService extends EntityService {
 
   async follow(payload) {
     if (payload.userId === payload.accountId) {
-      throw new Error(400, 'You cannot follow yourself.');
+      throw ApiError.BadRequest('You cannot follow yourself.');
     }
 
-    const result = await Follower.query()
+    return Follower.query()
       .insert(payload)
-      .onConflict(['userId', 'accountId'])
+      .onConflict(['authorId', 'userId'])
       .merge();
-    return result;
-  }
-
-  async unfollow(payload) {
-    const result = await Follower.query().delete().where(payload);
-    
-    return result;
   }
 }

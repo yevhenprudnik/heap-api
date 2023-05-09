@@ -7,24 +7,24 @@ export class Follower extends Model {
   }
 
   static get idColumn() {
-    return ['userId', 'accountId'];
+    return ['authorId', 'userId'];
   }
 
   static get relationMappings() {
     return {
-      user: {
+      author: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'follower.user_id',
+          from: 'follower.authorId',
           to: 'user.id',
         },
       },
-      account: {
+      user: {
         relation: Model.BelongsToManyRelation,
         modelClass: User,
         join: {
-          from: 'follower.account_id',
+          from: 'follower.userId',
           to: 'user.id',
         },
       },

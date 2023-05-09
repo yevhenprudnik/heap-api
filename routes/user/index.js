@@ -1,19 +1,18 @@
 import { UserService } from '../../services/user.service.js';
 import * as Schemas from './user.schemas.js';
-import { FollowerService } from '../../services/follower.service.js';
 import fastifyCors from '@fastify/cors';
 
 export default async (fastify, opts) => {
-  const userService = new UserService();
-  const followerService = new FollowerService();
+  const service = new UserService();
+
   fastify.get('/:id', Schemas.getUser, async (request, reply) => {
     const { id } = request.params;
 
-    return userService.getOne({ id });
+    return service.getOne({ id });
   });
 
   fastify.get('/', Schemas.getUsers, async (request, reply) => {
-    return userService.search(request.query);
+    return service.search(request.query);
   });
 
   fastify.patch(
@@ -26,7 +25,7 @@ export default async (fastify, opts) => {
       const { id } = request.user;
       const { username } = request.body;
 
-      return userService.update(id, { username });
+      return service.update(id, { username });
     }
   );
 
@@ -39,34 +38,7 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { id } = request.user;
 
-      return userService.deleteById(id);
-    }
-  );
-
-  fastify.post(
-    '/follow/:accountId',
-    {
-      ...Schemas.follow,
-      preHandler: [fastify.useAccessAuth],
-    },
-    async (request, reply) => {
-      const userId = request.user.id;
-      const { accountId } = request.params;
-
-      return followerService.follow({ userId, accountId });
-    }
-  );
-
-  fastify.post(
-    '/unfollow/:accountId',
-    {
-      ...Schemas.unfollow,
-      preHandler: [fastify.useAccessAuth],
-    },
-    async (request, reply) => {
-      const userId = request.user.id;
-      const { accountId } = request.params;
-      return followerService.unfollow({ userId, accountId });
+      return service.deleteById(id);
     }
   );
 };
