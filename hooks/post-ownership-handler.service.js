@@ -20,7 +20,7 @@ export class PostOwnershipChecker {
       throw ApiError.Forbidden('Invalid input format.');
     }
 
-    const post = await this.commentService.getOne({
+    const post = await this.postService.getOne({
       id,
       authorId: request.user.id,
     });
