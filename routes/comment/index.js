@@ -1,20 +1,21 @@
 import { CommentService } from '../../services/comment.service.js';
-import * as Schema from './comment.schemas.js';
+import * as Schemas from './comment.schemas.js';
+
 export default async (fastify, opts) => {
   const service = new CommentService();
 
-  fastify.get('/', Schema.getComments, async (request, reply) => {
+  fastify.get('/', Schemas.getComments, async (request, reply) => {
     return service.search(request.query, ['author']);
   });
 
-  fastify.get('/:id', Schema.getComment, async (request, reply) => {
+  fastify.get('/:id', Schemas.getComment, async (request, reply) => {
     const { id } = request.params;
     return service.getOne({ id }, ['author']);
   });
 
   fastify.post(
     '/',
-    { ...Schema.createComment, preHandler: fastify.useAccessAuth },
+    { ...Schemas.createComment, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
       const { content, postId } = request.body;
 
@@ -29,7 +30,7 @@ export default async (fastify, opts) => {
   fastify.patch(
     '/:id',
     {
-      ...Schema.updateComment,
+      ...Schemas.updateComment,
       preHandler: [fastify.useAccessAuth, fastify.useCommentOwnership],
     },
     async (request, reply) => {
@@ -44,7 +45,7 @@ export default async (fastify, opts) => {
   fastify.delete(
     '/:id',
     {
-      ...Schema.deleteComment,
+      ...Schemas.deleteComment,
       preHandler: [fastify.useAccessAuth, fastify.useCommentOwnership],
     },
     async (request, reply) => {

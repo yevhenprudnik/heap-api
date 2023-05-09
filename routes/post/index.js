@@ -1,22 +1,22 @@
 import { PostService } from '../../services/post.service.js';
-import * as Schema from './post.schemas.js';
+import * as Schemas from './post.schemas.js';
 
 export default async (fastify, opts) => {
   const service = new PostService();
 
-  fastify.get('/:id', Schema.getPost, async (request, reply) => {
+  fastify.get('/:id', Schemas.getPost, async (request, reply) => {
     const { id } = request.params;
 
     return service.getOne({ id }, ['author', 'comments.author']);
   });
 
-  fastify.get('/', Schema.getPosts, async (request, reply) => {
+  fastify.get('/', Schemas.getPosts, async (request, reply) => {
     return service.search(request.query, ['author']);
   });
 
   fastify.post(
     '/',
-    { ...Schema.createPost, preHandler: fastify.useAccessAuth },
+    { ...Schemas.createPost, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
       const { content } = request.body;
 
@@ -27,7 +27,7 @@ export default async (fastify, opts) => {
   fastify.patch(
     '/:id',
     {
-      ...Schema.updatePost,
+      ...Schemas.updatePost,
       preHandler: [fastify.useAccessAuth, fastify.usePostOwnership],
     },
     async (request, reply) => {
@@ -42,7 +42,7 @@ export default async (fastify, opts) => {
   fastify.delete(
     '/:id',
     {
-      ...Schema.deletePost,
+      ...Schemas.deletePost,
       preHandler: [fastify.useAccessAuth, fastify.usePostOwnership],
     },
     async (request, reply) => {

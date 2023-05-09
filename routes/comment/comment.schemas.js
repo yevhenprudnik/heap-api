@@ -54,8 +54,9 @@ export const getComments = {
 };
 
 export const createComment = {
-  description: 'Returns comment or throws an error for wrong credentials',
   schema: {
+    tags: ['Comment'],
+    security: [{ ApiToken: [] }],
     body: {
       type: 'object',
       required: ['content'],
@@ -72,6 +73,8 @@ export const createComment = {
 
 export const updateComment = {
   schema: {
+    tags: ['Comment'],
+    security: [{ ApiToken: [] }],
     body: {
       type: 'object',
       properties: {
@@ -96,6 +99,8 @@ export const updateComment = {
 
 export const deleteComment = {
   schema: {
+    tags: ['Comment'],
+    security: [{ ApiToken: [] }],
     params: {
       type: 'object',
       properties: {

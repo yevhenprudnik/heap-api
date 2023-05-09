@@ -5,7 +5,7 @@ env.config({ path: '../.env' });
 export const HOST = process.env.HOST;
 export const PORT = process.env.PORT;
 export const API_URL = process.env.API_URL;
-/* DATABASE INFORMATION */
+/* DATABASE INFO */
 export const DB_CONNECTION = process.env.DB_CONNECTION;
-/* Access and Refresh Key */
+/* JWT */
 export const JWT_SECRET = process.env.JWT_SECRET;
