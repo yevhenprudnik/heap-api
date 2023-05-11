@@ -6,12 +6,10 @@ export const up = knex => {
       .references('user.id')
       .notNullable()
       .onDelete('CASCADE');
-    table.string('content').notNullable;
-    table
-      .integer('postId')
-      .references('post.id')
-      .notNullable()
-      .onDelete('CASCADE');
+    table.string('content').notNullable();
+    table.integer('postId').references('post.id').onDelete('CASCADE');
+    table.integer('commentId').references('comment.id').onDelete('CASCADE');
+    table.enu('type', ['post', 'comment']).notNullable();
     table.timestamps(true, true);
   });
 };

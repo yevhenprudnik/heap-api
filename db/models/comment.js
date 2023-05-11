@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 import { User } from './user.js';
 import { Post } from './post.js';
+import { Like } from './like.js';
 
 export class Comment extends Model {
   static get tableName() {
@@ -25,6 +26,26 @@ export class Comment extends Model {
           from: 'comment.postId',
           to: 'post.id',
         },
+      },
+
+      comments: {
+        relation: Model.HasManyRelation,
+        modelClass: Comment,
+        join: {
+          from: 'comment.id',
+          to: 'comment.commentId',
+        },
+        cascadeDelete: true,
+      },
+
+      likes: {
+        relation: Model.HasManyRelation,
+        modelClass: Like,
+        join: {
+          from: 'comment.id',
+          to: 'like.commentId',
+        },
+        cascadeDelete: true,
       },
     };
   }
