@@ -5,24 +5,29 @@ export default async (fastify, opts) => {
   const service = new CommentService();
 
   fastify.get('/', Schemas.getComments, async (request, reply) => {
-    return service.search(request.query, ['author']);
+    return service.search(request.query, ['author', 'comments']);
   });
 
   fastify.get('/:id', Schemas.getComment, async (request, reply) => {
     const { id } = request.params;
-    return service.getOne({ id }, ['author']);
+    return service.getOne({ id }, ['author', 'comments']);
   });
 
   fastify.post(
-    '/',
+    '/:id',
     { ...Schemas.createComment, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
-      const { content, postId } = request.body;
+      const { id } = request.params;
+      const { type } = request.query;
+      const { content } = request.body;
+
+      const parentKey = type + 'Id';
 
       return service.create({
         authorId: request.user.id,
-        postId,
+        [parentKey]: id,
         content,
+        type,
       });
     }
   );

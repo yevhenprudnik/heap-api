@@ -3,8 +3,9 @@ const typeNumber = { type: 'number' };
 
 const comment = {
   id: typeNumber,
-  postId: typeNumber,
   content: typeString,
+  postId: typeNumber,
+  commentId: typeNumber,
 };
 
 const author = {
@@ -30,6 +31,13 @@ export const getComment = {
         properties: {
           ...comment,
           author,
+          comments: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: comment,
+            },
+          },
         },
       },
     },
@@ -46,6 +54,13 @@ export const getComments = {
           properties: {
             ...comment,
             author,
+            comments: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: comment,
+              },
+            },
           },
         },
       },
@@ -57,10 +72,29 @@ export const createComment = {
   schema: {
     tags: ['Comment'],
     security: [{ ApiToken: [] }],
+    params: {
+      type: 'object',
+      properties: {
+        id: typeNumber,
+      },
+      required: ['id'],
+    },
+    query: {
+      type: 'object',
+      properties: {
+        type: {
+          type: 'string',
+          enum: ['post', 'comment'],
+        },
+      },
+      required: ['type'],
+    },
     body: {
       type: 'object',
       required: ['content'],
-      properties: comment,
+      properties: {
+        content: typeString,
+      },
     },
     response: {
       '2xx': {
