@@ -1,8 +1,8 @@
-import * as Schemas from './follower.schemas.js';
-import { FollowerService } from '../../services/follower.service.js';
+import * as Schemas from './follow.schemas.js';
+import { FollowService } from '../../services/follow.service.js';
 
 export default async (fastify, opts) => {
-  const service = new FollowerService();
+  const service = new FollowService();
 
   fastify.post(
     '/:userId',
