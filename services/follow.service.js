@@ -2,7 +2,7 @@ import { Follower } from '../db/models/follower.js';
 import { ApiError } from '../exceptions.js';
 import { EntityService } from './entity.service.js';
 
-export class FollowerService extends EntityService {
+export class FollowService extends EntityService {
   constructor() {
     super(Follower);
   }

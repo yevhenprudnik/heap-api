@@ -1,12 +1,11 @@
-import { PostService } from '../services/post.service.js';
 import { ApiError } from '../exceptions.js';
 
-export class PostOwnershipChecker {
-  constructor() {
-    this.postService = new PostService();
+export class OwnershipHandler {
+  constructor(service) {
+    this.service = new service();
   }
 
-  usePostOwnership = async (request, reply) => {
+  useOwnership = async (request, reply) => {
     const { id } = request.params;
 
     if (
@@ -20,12 +19,12 @@ export class PostOwnershipChecker {
       throw ApiError.Forbidden('Invalid input format.');
     }
 
-    const post = await this.postService.getOne({
+    const entity = await this.service.getOne({
       id,
       authorId: request.user.id,
     });
 
-    if (typeof post === 'undefined' || post === null) {
+    if (typeof entity === 'undefined' || entity === null) {
       throw ApiError.Forbidden(
         'You do not have access to perform this action.'
       );
