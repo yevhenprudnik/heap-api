@@ -11,12 +11,12 @@ export default fp(async fastify => {
 
   fastify.decorate(
     'useAccessAuth',
-    authHandlersService.useTokenAuth(['access'])
+    authHandlersService.useAuth(['access'])
   );
 
   fastify.decorate(
     'useRefreshAuth',
-    authHandlersService.useTokenAuth(['refresh'])
+    authHandlersService.useAuth(['refresh'])
   );
 
   fastify.decorate('usePostOwnership', postOwnershipHandler.useOwnership);

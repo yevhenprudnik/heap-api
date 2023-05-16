@@ -28,7 +28,7 @@ export class Comment extends Model {
         },
       },
 
-      comments: {
+      replies: {
         relation: Model.HasManyRelation,
         modelClass: Comment,
         join: {

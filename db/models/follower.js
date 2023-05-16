@@ -20,6 +20,7 @@ export class Follower extends Model {
           to: 'user.id',
         },
       },
+
       user: {
         relation: Model.BelongsToManyRelation,
         modelClass: User,

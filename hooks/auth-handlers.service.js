@@ -8,12 +8,12 @@ export class AuthHandlersService {
     this.userService = new UserService();
   }
 
-  useTokenAuth = tokenTypes => async (request, reply) => {
+  useAuth = tokenTypes => async (request, reply) => {
     try {
       const authHeaders = request.headers.authorization;
 
       if (!authHeaders) {
-        throw ApiError.Unauthorized('No headers provided.');
+        throw ApiError.Unauthorized('No authorization headers provided.');
       }
 
       const [type, accessToken, refreshToken] = authHeaders.split(' ');
