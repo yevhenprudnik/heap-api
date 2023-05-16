@@ -5,12 +5,12 @@ export default async (fastify, opts) => {
   const service = new CommentService();
 
   fastify.get('/', Schemas.getComments, async (request, reply) => {
-    return service.search(request.query, ['author', 'comments']);
+    return service.search(request.query, ['author', 'replies.author']);
   });
 
   fastify.get('/:id', Schemas.getComment, async (request, reply) => {
     const { id } = request.params;
-    return service.getOne({ id }, ['author', 'comments']);
+    return service.getOne({ id }, ['author', 'replies.author']);
   });
 
   fastify.post(

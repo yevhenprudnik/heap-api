@@ -18,6 +18,7 @@ const author = {
 
 export const getComment = {
   schema: {
+    tags: ['Comment'],
     params: {
       type: 'object',
       properties: {
@@ -31,11 +32,14 @@ export const getComment = {
         properties: {
           ...comment,
           author,
-          comments: {
+          replies: {
             type: 'array',
             items: {
               type: 'object',
-              properties: comment,
+              properties: {
+                ...comment,
+                author,
+              },
             },
           },
         },
@@ -46,6 +50,7 @@ export const getComment = {
 
 export const getComments = {
   schema: {
+    tags: ['Comment'],
     response: {
       '2xx': {
         type: 'array',
@@ -54,11 +59,14 @@ export const getComments = {
           properties: {
             ...comment,
             author,
-            comments: {
+            replies: {
               type: 'array',
               items: {
                 type: 'object',
-                properties: comment,
+                properties: {
+                  ...comment,
+                  author,
+                },
               },
             },
           },
