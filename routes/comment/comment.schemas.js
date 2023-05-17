@@ -51,6 +51,10 @@ export const getComment = {
 export const getComments = {
   schema: {
     tags: ['Comment'],
+    query: {
+      type: 'object',
+      properties: comment,
+    },
     response: {
       '2xx': {
         type: 'array',
