@@ -54,6 +54,10 @@ export const getPost = {
 export const getPosts = {
   schema: {
     tags: ['Post'],
+    query: {
+      type: 'object',
+      properties: post,
+    },
     response: {
       '2xx': {
         type: 'array',

@@ -10,6 +10,10 @@ const user = {
 export const getUsers = {
   schema: {
     tags: ['User'],
+    query: {
+      type: 'object',
+      properties: user,
+    },
     response: {
       '2xx': {
         type: 'array',
@@ -69,4 +73,3 @@ export const deleteUser = {
     },
   },
 };
-
