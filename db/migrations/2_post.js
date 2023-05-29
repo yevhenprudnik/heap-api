@@ -7,6 +7,7 @@ export const up = knex => {
       .references('user.id')
       .notNullable()
       .onDelete('CASCADE');
+    table.string('url');
     table.timestamps(true, true);
   });
 };
