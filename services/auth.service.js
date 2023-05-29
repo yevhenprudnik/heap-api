@@ -10,7 +10,7 @@ export class AuthService {
   }
 
   async signUp(definition) {
-    const { email, password, username } = definition;
+    const { email, password, username, avatar } = definition;
 
     const candidate = await this.userService.getOne(builder =>
       builder.where({ email }).orWhere({ username })
@@ -34,6 +34,7 @@ export class AuthService {
       email,
       password: hashPassword,
       username,
+      avatar,
     });
 
     return this.tokenService.generateTokens({ id: user.id });

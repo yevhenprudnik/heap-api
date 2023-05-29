@@ -13,9 +13,9 @@ export default async fastify => {
   );
 
   fastify.post('/sign-up', Schemas.signUp, async (request, reply) => {
-    const { email, username, password } = request.body;
+    const { email, username, password, avatar } = request.body;
 
-    return service.signUp({ email, username, password });
+    return service.signUp({ email, username, password, avatar });
   });
 
   fastify.post('/sign-in', Schemas.signIn, async (request, reply) => {

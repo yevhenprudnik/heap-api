@@ -5,6 +5,7 @@ const post = {
   id: typeNumber,
   content: typeString,
   authorId: typeNumber,
+  url: typeString,
 };
 
 const author = {
@@ -12,6 +13,7 @@ const author = {
   properties: {
     id: typeNumber,
     username: typeString,
+    avatar: typeString,
   },
 };
 

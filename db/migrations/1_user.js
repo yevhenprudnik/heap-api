@@ -4,6 +4,7 @@ export const up = knex => {
     table.string('email', 255).notNullable().unique();
     table.string('username', 50).notNullable();
     table.string('password', 255).notNullable();
+    table.string('avatar');
     table.timestamps(true, true);
   });
 };
