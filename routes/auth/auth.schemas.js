@@ -5,6 +5,7 @@ const user = {
   id: typeNumber,
   email: typeString,
   username: typeString,
+  avatar: typeString,
 };
 
 const tokens = {
