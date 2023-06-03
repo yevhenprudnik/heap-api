@@ -24,6 +24,8 @@ const comment = {
   author: author,
 };
 
+const likeCount = typeNumber;
+
 export const getPost = {
   schema: {
     tags: ['Post'],
@@ -47,6 +49,7 @@ export const getPost = {
               properties: comment,
             },
           },
+          likeCount,
         },
       },
     },
@@ -68,6 +71,7 @@ export const getPosts = {
           properties: {
             ...post,
             author,
+            likeCount,
           },
         },
       },
