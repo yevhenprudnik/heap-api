@@ -15,6 +15,11 @@ export class EntityService {
     return query.findOne(filter);
   }
 
+  async count(filter) {
+    const query = this.queryBuilder;
+    return query.where(filter).resultSize();
+  }
+
   async search(filter, relations = []) {
     const query = this.queryBuilder;
 

@@ -7,13 +7,13 @@ export default async (fastify, opts) => {
   fastify.get('/:id', Schemas.getPost, async (request, reply) => {
     const { id } = request.params;
 
-    return service.getOne({ id }, ['author', 'comments.author']);
+    return service.getOne({ id }, ['author', 'comments.author', 'likes']);
   });
 
   fastify.get('/', Schemas.getPosts, async (request, reply) => {
-    return service.search(request.query, ['author']);
+    return service.search(request.query, ['author', 'likes']);
   });
-
+  
   fastify.post(
     '/',
     { ...Schemas.createPost, preHandler: fastify.useAccessAuth },
