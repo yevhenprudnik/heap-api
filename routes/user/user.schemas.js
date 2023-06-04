@@ -57,13 +57,14 @@ export const updateUser = {
     body: {
       type: 'object',
       properties: {
+        avatar: typeString,
         username: typeString,
       },
     },
     response: {
       '2xx': {
         type: 'object',
-        properties: user,
+        properties: { user },
       },
     },
   },
