@@ -8,15 +8,15 @@ export class User extends Model {
   }
 
   static get virtualAttributes() {
-    return ['followersCount', 'followsCount'];
+    return ['followersCount', 'followingsCount'];
   }
 
-  static get followersCount() {
-    return this.followers ? this.followers.length : 0;
+  get followersCount() {
+    return this.followers?.length ?? 0;
   }
 
-  static get followingsCount() {
-    return this.followings ? this.followings.length : 0;
+  get followingsCount() {
+    return this.followings?.length ?? 0;
   }
 
   static get relationMappings() {

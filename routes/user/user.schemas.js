@@ -43,7 +43,7 @@ export const getUser = {
         properties: {
           ...user,
           followersCount: typeNumber,
-          followsCount: typeNumber,
+          followingsCount: typeNumber,
         },
       },
     },
