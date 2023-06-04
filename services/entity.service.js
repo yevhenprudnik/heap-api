@@ -15,6 +15,11 @@ export class EntityService {
     return query.findOne(filter);
   }
 
+  async count(filter) {
+    const query = this.queryBuilder;
+    return query.where(filter).resultSize();
+  }
+
   async search(filter, relations = []) {
     const query = this.queryBuilder;
 
@@ -22,25 +27,9 @@ export class EntityService {
 
     query.where(filter);
 
-    const results = await query;
-
-    const virtualFields = this.model.virtualAttributes;
-
-    const resultsWithVirtualFields = results.map(result => {
-      const resultWithVirtuals = { ...result };
-
-      virtualFields.forEach(field => {
-        console.log(result[field]);
-        if (typeof result[field] !== 'undefined') {
-          resultWithVirtuals[field] = result[field];
-        }
-      });
-
-      return resultWithVirtuals;
-    });
-
-    return resultsWithVirtualFields;
+    return query;
   }
+
   async create(payload) {
     return this.queryBuilder.insert(payload);
   }

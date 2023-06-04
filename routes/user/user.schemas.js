@@ -40,7 +40,11 @@ export const getUser = {
     response: {
       '2xx': {
         type: 'object',
-        properties: user,
+        properties: {
+          ...user,
+          followersCount: typeNumber,
+          followsCount: typeNumber,
+        },
       },
     },
   },

@@ -27,9 +27,4 @@ export default async (fastify, opts) => {
       return service.deleteById(id);
     }
   );
-
-  fastify.get('/:accountId', async (request, reply) => {
-    const { accountId } = request.params;
-    return service.search({ authorId: accountId }, ['user', 'author']);
-  });
 };
