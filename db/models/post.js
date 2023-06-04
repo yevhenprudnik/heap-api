@@ -16,6 +16,14 @@ export class Post extends Model {
   //   });
   // }
 
+  static get virtualAttributes() {
+    return ['likeCount'];
+  }
+
+  get likeCount() {
+    return this.likes?.length ?? 0;
+  }
+
   static get relationMappings() {
     return {
       author: {
