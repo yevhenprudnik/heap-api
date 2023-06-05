@@ -7,7 +7,7 @@ export default async (fastify, opts) => {
   fastify.get('/:id', Schemas.getUser, async (request, reply) => {
     const { id } = request.params;
 
-    return service.getOne({ id }, ['followings', 'followers']);
+    return service.getOne({ id }, ['followings', 'followers', 'posts']);
   });
 
   fastify.get('/', Schemas.getUsers, async (request, reply) => {

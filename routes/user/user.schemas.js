@@ -45,6 +45,7 @@ export const getUser = {
           ...user,
           followersCount: typeNumber,
           followingsCount: typeNumber,
+          postCount: typeNumber,
         },
       },
     },

@@ -8,7 +8,7 @@ export class User extends Model {
   }
 
   static get virtualAttributes() {
-    return ['followersCount', 'followingsCount'];
+    return ['followersCount', 'followingsCount', 'postCount'];
   }
 
   get followersCount() {
@@ -17,6 +17,10 @@ export class User extends Model {
 
   get followingsCount() {
     return this.followings?.length ?? 0;
+  }
+
+  get postCount() {
+    return this.posts?.length ?? 0;
   }
 
   static get relationMappings() {
