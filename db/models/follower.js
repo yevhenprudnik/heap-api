@@ -6,10 +6,6 @@ export class Follower extends Model {
     return 'follower';
   }
 
-  static get idColumn() {
-    return ['authorId', 'userId'];
-  }
-
   static get relationMappings() {
     return {
       author: {
