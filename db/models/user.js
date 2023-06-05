@@ -39,7 +39,7 @@ export class User extends Model {
         modelClass: Follower,
         join: {
           from: 'user.id',
-          to: 'follower.userId',
+          to: 'follower.authorId',
         },
         cascadeDelete: true,
       },
@@ -49,7 +49,7 @@ export class User extends Model {
         modelClass: Follower,
         join: {
           from: 'user.id',
-          to: 'follower.authorId',
+          to: 'follower.userId',
         },
         cascadeDelete: true,
       },
