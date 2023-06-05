@@ -25,7 +25,7 @@ export class Post extends Model {
   }
 
   get commentCount() {
-    return this.likes?.length ?? 0;
+    return this.comments?.length ?? 0;
   }
 
   static get relationMappings() {
