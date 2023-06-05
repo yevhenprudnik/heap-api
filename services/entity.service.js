@@ -34,11 +34,17 @@ export class EntityService {
     return this.queryBuilder.insert(payload);
   }
 
+  async update(id, payload) {
+    return this.queryBuilder.patchAndFetchById(id, payload);
+  }
+
   async deleteById(id) {
     return this.queryBuilder.deleteById(id);
   }
 
-  async update(id, payload) {
-    return this.queryBuilder.patchAndFetchById(id, payload);
+  resolveIsLiked(entities, uid) {
+    entities.forEach(entity => {
+      entity.isLiked = entity.likes?.some(like => like.authorId === uid);
+    });
   }
 }

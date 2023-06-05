@@ -4,14 +4,30 @@ import * as Schemas from './comment.schemas.js';
 export default async (fastify, opts) => {
   const service = new CommentService();
 
-  fastify.get('/', Schemas.getComments, async (request, reply) => {
-    return service.search(request.query, ['author', 'replies.author']);
-  });
+  fastify.get(
+    '/',
+    { ...Schemas.getComments, preHandler: fastify.useAccessAuth },
+    async (request, reply) => {
+      return service.search(
+        request.query,
+        ['author', 'replies.author', 'likes'],
+        request.user.id
+      );
+    }
+  );
 
-  fastify.get('/:id', Schemas.getComment, async (request, reply) => {
-    const { id } = request.params;
-    return service.getOne({ id }, ['author', 'replies.author']);
-  });
+  fastify.get(
+    '/:id',
+    { ...Schemas.getComment, preHandler: fastify.useAccessAuth },
+    async (request, reply) => {
+      const { id } = request.params;
+      return service.getOne(
+        { id },
+        ['author', 'replies.author', 'likes'],
+        request.user.id
+      );
+    }
+  );
 
   fastify.post(
     '/:id',

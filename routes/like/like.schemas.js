@@ -1,5 +1,4 @@
-const typeNumber = { type: 'number' };
-const typeString = { type: 'string' };
+import { typeNumber, typeString } from '../../common/schema.types.js';
 
 const like = {
   id: typeNumber,

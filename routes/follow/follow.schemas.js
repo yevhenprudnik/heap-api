@@ -1,4 +1,4 @@
-const typeNumber = { type: 'number' };
+import { typeNumber } from '../../common/schema.types.js';
 
 export const follow = {
   schema: {

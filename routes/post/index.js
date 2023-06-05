@@ -4,16 +4,32 @@ import * as Schemas from './post.schemas.js';
 export default async (fastify, opts) => {
   const service = new PostService();
 
-  fastify.get('/:id', Schemas.getPost, async (request, reply) => {
-    const { id } = request.params;
+  fastify.get(
+    '/:id',
+    { ...Schemas.getPost, preHandler: fastify.useAccessAuth },
+    async (request, reply) => {
+      const { id } = request.params;
 
-    return service.getOne({ id }, ['author', 'comments.author', 'likes']);
-  });
+      return service.getOne(
+        { id },
+        ['author', 'comments.author', 'likes'],
+        request.user.id
+      );
+    }
+  );
 
-  fastify.get('/', Schemas.getPosts, async (request, reply) => {
-    return service.search(request.query, ['author', 'likes']);
-  });
-  
+  fastify.get(
+    '/',
+    { ...Schemas.getPosts, preHandler: fastify.useAccessAuth },
+    async (request, reply) => {
+      return service.search(
+        request.query,
+        ['author', 'likes'],
+        request.user.id
+      );
+    }
+  );
+
   fastify.post(
     '/',
     { ...Schemas.createPost, preHandler: fastify.useAccessAuth },

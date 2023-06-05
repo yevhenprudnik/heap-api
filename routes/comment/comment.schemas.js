@@ -1,11 +1,11 @@
-const typeString = { type: 'string' };
-const typeNumber = { type: 'number' };
+import { typeBoolean, typeNumber, typeString } from '../../common/schema.types.js';
 
 const comment = {
   id: typeNumber,
   content: typeString,
   postId: typeNumber,
   commentId: typeNumber,
+  isLiked: typeBoolean,
 };
 
 const author = {

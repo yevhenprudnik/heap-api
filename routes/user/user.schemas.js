@@ -1,5 +1,4 @@
-const typeString = { type: 'string' };
-const typeNumber = { type: 'number' };
+import { typeNumber, typeString } from '../../common/schema.types.js';
 
 const user = {
   id: typeNumber,
