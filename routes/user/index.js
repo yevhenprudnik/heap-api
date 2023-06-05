@@ -11,7 +11,7 @@ export default async (fastify, opts) => {
   });
 
   fastify.get('/', Schemas.getUsers, async (request, reply) => {
-    return service.search(request.query);
+    return service.search(request.query.keyword);
   });
 
   fastify.patch(

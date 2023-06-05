@@ -12,7 +12,9 @@ export const getUsers = {
     tags: ['User'],
     query: {
       type: 'object',
-      properties: user,
+      properties: {
+        keyword: typeString,
+      },
     },
     response: {
       '2xx': {
