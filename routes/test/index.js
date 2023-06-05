@@ -20,7 +20,5 @@ export default async fastify => {
     console.log({
       importedServices: [userService, postService, commentService, likeService],
     });
-
-    return { test: true };
   });
 };
