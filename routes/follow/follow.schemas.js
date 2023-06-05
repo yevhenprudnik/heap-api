@@ -1,4 +1,42 @@
-import { typeNumber } from '../../common/schema.types.js';
+import { typeNumber, typeString } from '../../common/schema.types.js';
+
+const follower = {
+  type: 'object',
+  properties: {
+    id: typeNumber,
+    username: typeString,
+    avatar: typeString,
+  },
+};
+
+export const getFollow = {
+  schema: {
+    tags: ['Follower'],
+    security: [{ ApiToken: [] }],
+    query: {
+      type: 'object',
+      properties: {
+        userId: typeNumber,
+        authorId: typeNumber,
+      },
+    },
+    response: {
+      '2xx': {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            id: typeNumber,
+            authorId: typeNumber,
+            userId: typeNumber,
+            author: follower,
+            user: follower,
+          },
+        },
+      },
+    },
+  },
+};
 
 export const follow = {
   schema: {

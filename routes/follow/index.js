@@ -4,6 +4,10 @@ import { FollowService } from '../../services/follow.service.js';
 export default async (fastify, opts) => {
   const service = new FollowService();
 
+  fastify.get('/', Schemas.getFollow, async (request, reply) => {
+    return service.search(request.query, ['author', 'user']);
+  });
+
   fastify.post(
     '/:userId',
     {

@@ -22,7 +22,7 @@ export class Follower extends Model {
       },
 
       user: {
-        relation: Model.BelongsToManyRelation,
+        relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
           from: 'follower.userId',
