@@ -22,9 +22,9 @@ export default async (fastify, opts) => {
     },
     async (request, reply) => {
       const { id } = request.user;
-      const { username } = request.body;
+      const { username, avatar } = request.body;
 
-      return service.update(id, { username });
+      return service.update(id, { username, avatar });
     }
   );
 

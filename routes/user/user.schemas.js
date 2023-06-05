@@ -59,6 +59,7 @@ export const updateUser = {
       type: 'object',
       properties: {
         username: typeString,
+        avatar: typeString,
       },
     },
     response: {
