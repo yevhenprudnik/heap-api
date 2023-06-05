@@ -17,14 +17,14 @@ export class Post extends Model {
   // }
 
   static get virtualAttributes() {
-    return ['likeCount', 'commentCount'];
+    return ['likesCount', 'commentsCount'];
   }
 
-  get likeCount() {
+  get likesCount() {
     return this.likes?.length ?? 0;
   }
 
-  get commentCount() {
+  get commentsCount() {
     return this.comments?.length ?? 0;
   }
 

@@ -10,8 +10,8 @@ const post = {
   authorId: typeNumber,
   url: typeString,
   isLiked: typeBoolean,
-  likeCount: typeNumber,
-  commentCount: typeNumber,
+  likesCount: typeNumber,
+  commentsCount: typeNumber,
 };
 
 const author = {
