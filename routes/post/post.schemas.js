@@ -10,6 +10,8 @@ const post = {
   authorId: typeNumber,
   url: typeString,
   isLiked: typeBoolean,
+  likeCount: typeNumber,
+  commentCount: typeNumber,
 };
 
 const author = {
@@ -27,8 +29,6 @@ const comment = {
   content: typeString,
   author: author,
 };
-
-const likeCount = typeNumber;
 
 export const getPost = {
   schema: {
@@ -53,7 +53,6 @@ export const getPost = {
               properties: comment,
             },
           },
-          likeCount,
         },
       },
     },
@@ -75,7 +74,6 @@ export const getPosts = {
           properties: {
             ...post,
             author,
-            likeCount,
           },
         },
       },

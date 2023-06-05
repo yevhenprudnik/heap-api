@@ -24,7 +24,7 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       return service.search(
         request.query,
-        ['author', 'likes'],
+        ['author', 'likes', 'comments'],
         request.user.id
       );
     }
