@@ -49,9 +49,9 @@ export default async (fastify, opts) => {
     async (request, reply) => {
       const { id } = request.params;
 
-      const { content } = request.body;
+      const { content, url } = request.body;
 
-      return service.update(id, { content });
+      return service.update(id, { content, url });
     }
   );
 

@@ -112,6 +112,7 @@ export const updatePost = {
       type: 'object',
       properties: {
         content: typeString,
+        url: typeString
       },
     },
     params: {
