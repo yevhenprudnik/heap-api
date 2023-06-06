@@ -34,9 +34,9 @@ export default async (fastify, opts) => {
     '/',
     { ...Schemas.createPost, preHandler: fastify.useAccessAuth },
     async (request, reply) => {
-      const { content, url } = request.body;
+      const { content, url, id } = request.body;
 
-      return service.create({ content, authorId: request.user.id, url });
+      return service.create({ content, authorId: request.user.id, url, id });
     }
   );
 

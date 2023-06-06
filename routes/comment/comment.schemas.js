@@ -1,4 +1,8 @@
-import { typeBoolean, typeNumber, typeString } from '../../common/schema.types.js';
+import {
+  typeBoolean,
+  typeNumber,
+  typeString,
+} from '../../common/schema.types.js';
 
 const comment = {
   id: typeNumber,
@@ -6,6 +10,8 @@ const comment = {
   postId: typeNumber,
   commentId: typeNumber,
   isLiked: typeBoolean,
+  likesCount: typeNumber,
+  repliesCount: typeNumber,
 };
 
 const author = {

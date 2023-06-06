@@ -8,6 +8,18 @@ export class Comment extends Model {
     return 'comment';
   }
 
+  static get virtualAttributes() {
+    return ['likesCount', 'repliesCount'];
+  }
+
+  get likesCount() {
+    return this.likes?.length ?? 0;
+  }
+
+  get repliesCount() {
+    return this.replies?.length ?? 0;
+  }
+
   static get relationMappings() {
     return {
       author: {
