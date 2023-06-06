@@ -1,5 +1,6 @@
 import {
   typeBoolean,
+  typeDate,
   typeNumber,
   typeString,
 } from '../../common/schema.types.js';
@@ -9,6 +10,8 @@ const post = {
   content: typeString,
   authorId: typeNumber,
   url: typeString,
+  created_at: typeDate,
+  updated_at: typeDate,
   isLiked: typeBoolean,
   likesCount: typeNumber,
   commentsCount: typeNumber,
