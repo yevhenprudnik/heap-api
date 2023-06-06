@@ -20,12 +20,14 @@ export class EntityService {
     return query.where(filter).resultSize();
   }
 
-  async search(filter, relations = []) {
+  async search(filter, relations = [], sortBy = 'created_at') {
     const query = this.queryBuilder;
 
     relations.forEach(relation => query.withGraphFetched(relation));
 
     query.where(filter);
+
+    query.orderBy(sortBy, 'desc');
 
     return query;
   }
