@@ -39,4 +39,4 @@ COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "npx", "fastify", "start", "--address", "0.0.0.0", "app.js" ]
+CMD [ "npm", "start"]

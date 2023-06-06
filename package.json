@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "fastify start app.js",
+    "start": "node server.js",
     "dev": "fastify start -w -P app.js",
     "migrate:up": "npx knex migrate:latest --knexfile db/knexfile.js",
     "migrate:down": "npx knex migrate:rollback --knexfile db/knexfile.js"
