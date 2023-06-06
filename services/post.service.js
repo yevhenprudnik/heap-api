@@ -7,7 +7,10 @@ export class PostService extends EntityService {
   }
 
   async search(filter, relations = [], uid) {
-    const posts = await super.search(filter, relations);
+    const posts = await super.search(filter, relations, {
+      field: 'created_at',
+      order: 'desc',
+    });
 
     super.resolveIsLiked(posts, uid);
 
